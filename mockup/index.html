@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Аудит-Перфект — аудит, облік і супровід бізнесу</title>
+  <meta name="description" content="Супроводжуємо бізнес у звітності, перевірках і призначенні статусу критично важливого підприємства.">
+  <meta name="theme-color" content="#141824">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css?v=20260916g">
+  <link rel="stylesheet" href="css/base.css?v=20260916g">
+  <link rel="stylesheet" href="css/header.css?v=20260916g">
+  <link rel="stylesheet" href="css/footer.css?v=20260916g">
+  <link rel="stylesheet" href="css/home.css?v=20260916g">
+  <link rel="stylesheet" href="css/why.css?v=20260916g">
+  <link rel="stylesheet" href="css/news.css?v=20260916g">
+  <link rel="stylesheet" href="css/consult.css?v=20260916g">
+  <link rel="stylesheet" href="css/directions.css?v=20260916g">
+  <link rel="stylesheet" href="css/pages.css?v=20260916g">
+  <link rel="stylesheet" href="css/motion.css?v=20260916g">
+</head>
+<body class="is-home" data-page="home">
+  <a class="skip-link" href="#main">Перейти до контенту</a>
+  <div data-include="partials/header.html">
+  <header class="site-header">
+    <div class="header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__name">Аудит-Перфект</span>
+        <span class="brand__tag">Аудиторська фірма</span>
+      </a>
+      <nav class="nav-desktop" aria-label="Головне меню">
+        <a href="index.html" data-nav="home">Головна</a>
+        <a href="pro-nas.html" data-nav="about">Про нас</a>
+        <div class="nav-item">
+          <a href="poslugy.html" data-nav="services" aria-haspopup="true">Послуги</a>
+          <div class="nav-sub" role="list">
+            <p class="nav-sub__kicker">Напрями</p>
+            <a href="poslugy-audytorski.html">Аудиторські послуги</a>
+            <a href="poslugy-buhgalterski.html">Бухгалтерські послуги</a>
+            <a href="poslugy-transfertne.html">Трансфертне ціноутворення</a>
+            <a href="poslugy-kik.html">КІК</a>
+            <a href="poslugy-viyskovyy-oblik.html">Військовий облік</a>
+            <a href="poslugy-yurydychni.html">Юридичні послуги</a>
+            <a href="poslugy-kadrovyy.html">Кадровий супровід</a>
+          </div>
+        </div>
+        <a href="novyny.html" data-nav="news">Новини</a>
+        <a href="kontakty.html" data-nav="contacts">Контакти</a>
+      </nav>
+      <a class="header__mail" href="mailto:office@auditperfekt.ua">office@auditperfekt.ua</a>
+      <a class="header__phone" href="tel:+380443551822">+38 044 355 18 22</a>
+      <button class="nav-toggle" type="button" data-menu-open aria-expanded="false" aria-controls="drawer" aria-label="Відкрити меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="drawer" id="drawer" data-drawer>
+    <div class="drawer__backdrop" data-drawer-backdrop></div>
+    <div class="drawer__panel">
+      <button class="btn btn--ghost" type="button" data-menu-close>Закрити</button>
+      <nav aria-label="Мобільне меню">
+        <a href="index.html" data-nav="home">Головна</a>
+        <a href="pro-nas.html" data-nav="about">Про нас</a>
+        <a href="poslugy.html" data-nav="services">Послуги</a>
+        <div class="nav-sub">
+          <p class="nav-sub__kicker">Напрями</p>
+          <a href="poslugy-audytorski.html">Аудиторські послуги</a>
+          <a href="poslugy-buhgalterski.html">Бухгалтерські послуги</a>
+          <a href="poslugy-transfertne.html">Трансфертне ціноутворення</a>
+          <a href="poslugy-kik.html">КІК</a>
+          <a href="poslugy-viyskovyy-oblik.html">Військовий облік</a>
+          <a href="poslugy-yurydychni.html">Юридичні послуги</a>
+          <a href="poslugy-kadrovyy.html">Кадровий супровід</a>
+        </div>
+        <a href="novyny.html" data-nav="news">Новини</a>
+        <a href="kontakty.html" data-nav="contacts">Контакти</a>
+        <a class="header__mail" href="mailto:office@auditperfekt.ua">office@auditperfekt.ua</a>
+        <a class="btn btn--primary" href="tel:+380443551822">Зателефонувати</a>
+      </nav>
+    </div>
+  </div>
+</div>
+  <main id="main">
+    <section class="hero-cine" aria-labelledby="hero-title">
+      <div class="hero-cine__shell">
+        <div class="hero-cine__media" aria-hidden="true">
+          <img
+            class="hero-cine__img"
+            src="img/hero.jpg"
+            alt=""
+            width="2000"
+            height="1333"
+            fetchpriority="high"
+            decoding="async"
+          >
+          <div class="hero-cine__overlay"></div>
+        </div>
+        <div class="hero-cine__content">
+          <p class="hero-cine__eyebrow">Аудиторська фірма</p>
+          <h1 id="hero-title" class="hero-cine__title">Супроводжуємо бізнес у звітності, перевірках і призначенні статусу критично важливого підприємства.</h1>
+          <p class="hero-cine__lead">Аудит, облік, трансфертне ціноутворення, КІК, військовий облік і юридичний супровід — однією командою.</p>
+          <div class="hero-cine__actions">
+            <a class="hero-cine__btn hero-cine__btn--call" href="tel:+380443551822">Зателефонувати</a>
+            <a class="hero-cine__btn hero-cine__btn--ghost" href="poslugy.html">Усі послуги</a>
+          </div>
+        </div>
+        <a class="hero-cine__scroll" href="#napriamy">
+          <span class="hero-cine__scroll-label">Далі</span>
+          <span class="hero-cine__scroll-line" aria-hidden="true"></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="directions directions--home" id="napriamy">
+      <div class="container directions__split">
+        <header class="directions__intro reveal">
+          <p class="section-kicker">Сім напрямів</p>
+          <h2 class="directions__title">Напрями <em>роботи</em></h2>
+          <p class="directions__lead">Комплексний супровід бізнесу в одній команді. Деталі напрямів — у каталозі.</p>
+          <a class="directions__cta" href="poslugy.html">Каталог послуг</a>
+        </header>
+        <ol class="directions__list">
+          <li class="directions__row reveal">
+            <a href="poslugy-audytorski.html">
+              <span class="directions__name">Аудиторські послуги</span>
+              <p class="directions__hint">Обовʼязковий та ініціативний аудит, супутні послуги.</p>
+            </a>
+          </li>
+          <li class="directions__row reveal">
+            <a href="poslugy-buhgalterski.html">
+              <span class="directions__name">Бухгалтерські послуги</span>
+              <p class="directions__hint">Облік, облікова політика, розрахунки із персоналом.</p>
+            </a>
+          </li>
+          <li class="directions__row reveal">
+            <a href="poslugy-transfertne.html">
+              <span class="directions__name">Трансфертне ціноутворення</span>
+              <p class="directions__hint">Документація та супровід контрольованих операцій.</p>
+            </a>
+          </li>
+          <li class="directions__row reveal">
+            <a href="poslugy-kik.html">
+              <span class="directions__name">КІК</span>
+              <p class="directions__hint">Супровід звітності та оподаткування прибутку КІК.</p>
+            </a>
+          </li>
+          <li class="directions__row reveal">
+            <a href="poslugy-viyskovyy-oblik.html">
+              <span class="directions__name">Військовий облік</span>
+              <p class="directions__hint">Ведення обліку та статус критично важливого підприємства.</p>
+            </a>
+          </li>
+          <li class="directions__row reveal">
+            <a href="poslugy-yurydychni.html">
+              <span class="directions__name">Юридичні послуги</span>
+              <p class="directions__hint">Супровід договорів, перевірок і корпоративних змін.</p>
+            </a>
+          </li>
+          <li class="directions__row reveal">
+            <a href="poslugy-kadrovyy.html">
+              <span class="directions__name">Кадровий супровід</span>
+              <p class="directions__hint">Кадровий облік та оформлення кадрових документів.</p>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="why" id="chomu">
+      <div class="container why__split">
+        <header class="why__intro reveal">
+          <p class="section-kicker">Підхід</p>
+          <h2 class="why__title">Чому <em>з нами</em></h2>
+          <p class="why__lead">Одна команда веде справу до досягнення мети.</p>
+        </header>
+        <div class="why__grid">
+          <article class="why__item reveal">
+            <h3>Одна команда</h3>
+            <p>Одна команда веде справу до досягнення мети.</p>
+          </article>
+          <article class="why__item reveal">
+            <h3>Статус критичності</h3>
+            <p>Супровід на кожному етапі до позитивного результату.</p>
+          </article>
+          <article class="why__item reveal">
+            <h3>Супровід перевірок</h3>
+            <p>Звільняємо бізнес від зайвої витрати часу та нервів.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="feed" id="novyny">
+      <div class="container feed__split">
+        <header class="feed__intro reveal">
+          <p class="section-kicker">Стрічка</p>
+          <h2 class="feed__title">Новини</h2>
+          <a class="feed__cta" href="novyny.html">Уся стрічка</a>
+        </header>
+        <div class="feed__items">
+          <a class="feed__lead reveal" href="novyna-krytychnist.html">
+            <time datetime="2026-09-07">07.09.2026</time>
+            <h3>Критерії критичності: що змінилось і що готувати бізнесу</h3>
+          </a>
+          <a class="feed__item reveal" href="novyna-krytychnist.html">
+            <time datetime="2026-08-19">19.08.2026</time>
+            <h3>Трансфертне ціноутворення: на що дивиться Державна податкова служба у перевірках</h3>
+          </a>
+          <a class="feed__item reveal" href="novyna-krytychnist.html">
+            <time datetime="2026-07-30">30.07.2026</time>
+            <h3>Обовʼязковий аудит: кого стосується цього року</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="consult" id="konsultacia">
+      <div class="container consult__split">
+        <header class="consult__copy reveal">
+          <p class="section-kicker">Контакт</p>
+          <h2 class="consult__title">Потрібна <em>консультація</em></h2>
+          <p class="consult__lead">Заявок на сайті немає — одразу дзвінок або лист.</p>
+        </header>
+        <div class="consult__actions reveal reveal--delay">
+          <a class="consult__btn consult__btn--call" href="tel:+380443551822">Зателефонувати</a>
+          <a class="consult__btn consult__btn--mail" href="mailto:office@auditperfekt.ua">Написати листа</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div data-include="partials/footer-home.html">
+  <footer class="site-footer">
+    <div class="footer__grid">
+      <div>
+        <a class="footer__brand" href="index.html">
+          Аудит-Перфект
+          <span class="footer__brand-tag">Аудиторська фірма</span>
+        </a>
+        <p>Аудит, облік, трансфертне ціноутворення, КІК, військовий облік і юридичний супровід — однією командою.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Підвал">
+        <a href="index.html">Головна</a>
+        <a href="pro-nas.html">Про нас</a>
+        <a href="poslugy.html">Послуги</a>
+        <a href="novyny.html">Новини</a>
+        <a href="kontakty.html">Контакти</a>
+        <a href="polityka.html">Політика конфіденційності</a>
+      </nav>
+      <div>
+        <a href="tel:+380443551822">+38 044 355 18 22</a><br>
+        <a href="mailto:office@auditperfekt.ua">office@auditperfekt.ua</a>
+        <p>вул. Велика Житомирська, 20, Київ</p>
+      </div>
+    </div>
+    <div class="footer__meta">
+      <span>© 2026 Аудит-Перфект</span>
+      <span class="footer__credit">
+        Сайт зроблено в
+        <a href="https://www.prometeylabs.com/corporate-website-v2/" rel="nofollow noopener noreferrer" target="_blank">PrometeyLabs</a>
+      </span>
+    </div>
+  </footer>
+</div>
+  <script src="js/include.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+.page-intro {
+  padding-block: 2.75rem 2.5rem;
+  background: var(--bg);
+}
+
+.page-intro--service .page-intro__title {
+  max-width: 14ch;
+}
+
+.page-intro__title {
+  margin: 0;
+  max-width: 12ch;
+  font-family: var(--ff-display);
+  font-size: clamp(2.4rem, 5.4vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.page-intro__title em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.page-intro__lead {
+  margin: 1.15rem 0 0;
+  max-width: 42ch;
+  color: var(--muted);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .page-intro { padding-block: 3.25rem 2.75rem; }
+}
+
+@media (min-width: 1024px) {
+  .page-intro__split {
+    display: grid;
+    grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+    gap: 3rem 5rem;
+    align-items: end;
+  }
+
+  .page-intro__lead {
+    margin: 0;
+    max-width: 44ch;
+  }
+}

@@ -1,0 +1,201 @@
+.directions {
+  background: var(--ink);
+  color: #ffffff;
+  padding-block: 5rem;
+  scroll-margin-top: calc(var(--header-h) + var(--safe-top));
+}
+
+.directions__head {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2.75rem;
+}
+
+.directions__title {
+  margin: 0;
+  max-width: 12ch;
+  font-family: var(--ff-display);
+  font-size: clamp(2.6rem, 6.2vw, 4.75rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.directions__title em {
+  font-style: normal;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.55);
+}
+
+.directions__catalog {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: rgb(173 196 255);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.directions__catalog:hover { color: var(--red); }
+
+.directions__lead {
+  margin: 1.15rem 0 0;
+  max-width: 34ch;
+  color: rgb(255 255 255 / 0.58);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.directions__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid rgb(255 255 255 / 0.42);
+  border-radius: var(--radius);
+  background: rgb(255 255 255 / 0.08);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background var(--t-ui) var(--ease-ui),
+    color var(--t-ui) var(--ease-ui),
+    border-color var(--t-ui) var(--ease-ui);
+}
+
+.directions__cta:hover,
+.directions__cta:focus-visible {
+  background: rgb(255 255 255 / 0.16);
+  color: #ffffff;
+  outline: none;
+}
+
+.directions__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.directions__row,
+.directions__row a {
+  display: grid;
+  gap: 0.45rem 1.75rem;
+  align-items: baseline;
+  min-height: 44px;
+  padding: 1.45rem 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.12);
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.directions__row:has(> a) {
+  padding: 0;
+  border-bottom: 0;
+}
+
+.directions__row:has(> a) > a {
+  width: 100%;
+}
+
+.directions__name {
+  font-family: var(--ff-display);
+  font-size: clamp(1.55rem, 3.2vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  transition:
+    color var(--t-ui) var(--ease-ui),
+    transform var(--t-ui) var(--ease-out);
+}
+
+.directions__hint {
+  margin: 0;
+  max-width: 38ch;
+  color: rgb(255 255 255 / 0.5);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.directions__go {
+  color: var(--red);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.directions--catalog,
+.directions--service {
+  padding-block: 4rem 5rem;
+}
+
+@media (min-width: 768px) {
+  .directions { padding-block: 7rem; }
+
+  .directions--catalog,
+  .directions--service { padding-block: 5.5rem 7rem; }
+
+  .directions__head {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    margin-bottom: 3.5rem;
+  }
+
+  .directions--home .directions__row:not(:has(> a)),
+  .directions--service .directions__row:not(:has(> a)) {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    padding-block: 1.7rem;
+  }
+
+  .directions--catalog .directions__row a {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) auto;
+    padding-block: 1.85rem;
+  }
+
+  .directions--home .directions__row > a {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    padding-block: 1.7rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .directions--home .directions__split,
+  .directions--service .directions__split {
+    display: grid;
+    grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+    gap: 4rem 5rem;
+    align-items: start;
+  }
+
+  .directions--home .directions__intro,
+  .directions--service .directions__intro {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+  }
+
+  .directions--home .directions__list,
+  .directions--service .directions__list {
+    border-top: 0;
+  }
+
+  .directions--home .directions__row:first-child,
+  .directions--service .directions__row:first-child {
+    padding-top: 0;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .directions__row a:hover .directions__name {
+    color: var(--red);
+    transform: translate3d(0.45rem, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .directions__name { transition: none; }
+}
