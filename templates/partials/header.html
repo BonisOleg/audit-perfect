@@ -1,0 +1,49 @@
+<header class="site-header">
+  <div class="header__inner">
+    <a class="brand" href="{% url 'home' %}">
+      <span class="brand__name">{{ site.site_name }}</span>
+      <span class="brand__tag">{{ site.tagline }}</span>
+    </a>
+    <nav class="nav-desktop" aria-label="Головне меню">
+      <a href="{% url 'home' %}"{% if current_nav == "home" %} aria-current="page"{% endif %} data-nav="home">Головна</a>
+      <a href="{% url 'pages:about' %}"{% if current_nav == "about" %} aria-current="page"{% endif %} data-nav="about">Про нас</a>
+      <div class="nav-item">
+        <a href="{% url 'services:list' %}"{% if current_nav == "services" %} aria-current="page"{% endif %} data-nav="services" aria-haspopup="true">Послуги</a>
+        <div class="nav-sub" role="list">
+          <p class="nav-sub__kicker">Напрями</p>
+          {% for s in nav_services %}
+          <a href="{{ s.get_absolute_url }}">{{ s.title }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      <a href="{% url 'news:list' %}"{% if current_nav == "news" %} aria-current="page"{% endif %} data-nav="news">Новини</a>
+      <a href="{% url 'pages:contacts' %}"{% if current_nav == "contacts" %} aria-current="page"{% endif %} data-nav="contacts">Контакти</a>
+    </nav>
+    <a class="header__mail" href="mailto:{{ site.email }}">{{ site.email }}</a>
+    <a class="header__phone" href="tel:{{ site.phone_href }}">{{ site.phone }}</a>
+    <button class="nav-toggle" type="button" data-menu-open aria-expanded="false" aria-controls="drawer" aria-label="Відкрити меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="drawer" id="drawer" data-drawer>
+  <div class="drawer__backdrop" data-drawer-backdrop></div>
+  <div class="drawer__panel">
+    <button class="btn btn--ghost" type="button" data-menu-close>Закрити</button>
+    <nav aria-label="Мобільне меню">
+      <a href="{% url 'home' %}" data-nav="home">Головна</a>
+      <a href="{% url 'pages:about' %}" data-nav="about">Про нас</a>
+      <a href="{% url 'services:list' %}" data-nav="services">Послуги</a>
+      <div class="nav-sub">
+        <p class="nav-sub__kicker">Напрями</p>
+        {% for s in nav_services %}
+        <a href="{{ s.get_absolute_url }}">{{ s.title }}</a>
+        {% endfor %}
+      </div>
+      <a href="{% url 'news:list' %}" data-nav="news">Новини</a>
+      <a href="{% url 'pages:contacts' %}" data-nav="contacts">Контакти</a>
+      <a class="header__mail" href="mailto:{{ site.email }}">{{ site.email }}</a>
+      <a class="btn btn--primary" href="tel:{{ site.phone_href }}">Зателефонувати</a>
+    </nav>
+  </div>
+</div>

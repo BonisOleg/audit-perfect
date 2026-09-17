@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ service.seo_title }}{% endblock %}
+{% block meta_description %}{{ service.seo_description }}{% endblock %}
+{% block data_page %}services{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/page-intro.css' %}">
+<link rel="stylesheet" href="{% static 'css/directions.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="page-intro page-intro--service">
+  <div class="container">
+    <p class="crumbs"><a href="{% url 'home' %}">Головна</a> · <a href="{% url 'services:list' %}">Послуги</a> · {{ service.title }}</p>
+    <div class="page-intro__copy reveal">
+      <p class="section-kicker">Напрям</p>
+      <h1 class="page-intro__title">{{ service.title }}</h1>
+      <p class="page-intro__lead">{{ service.short_description }}</p>
+    </div>
+  </div>
+</header>
+
+<section class="directions directions--service" aria-label="Що входить">
+  <div class="container directions__split">
+    <header class="directions__intro reveal">
+      <h2 class="directions__title">Що <em>входить</em></h2>
+      {% if service.audience %}
+      <p class="directions__audience">
+        <span class="directions__audience-label">Для кого</span>
+        {{ service.audience_body }}
+      </p>
+      {% endif %}
+      <div class="directions__actions">
+        <a class="directions__cta directions__cta--primary" href="#konsultacia">Замовити консультацію</a>
+        <a class="directions__cta" href="{% url 'services:list' %}">Усі напрями</a>
+      </div>
+    </header>
+    <ol class="directions__list">
+      {% for item in service.composition %}
+      <li class="directions__row reveal">
+        <span class="directions__name">{% if item.title %}{{ item.title }}{% else %}{{ item }}{% endif %}</span>
+        {% if item.text %}<p class="directions__hint">{{ item.text }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<nav class="service-more" aria-label="Інші напрями">
+  <div class="container">
+    <p class="section-kicker">Інші напрями</p>
+    <ul class="service-more__list">
+      {% for s in nav_services %}
+      {% if s.pk != service.pk %}
+      <li>
+        <a href="{{ s.get_absolute_url }}">{{ s.title }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
+
+{% include "partials/consult.html" %}
+{% endblock %}

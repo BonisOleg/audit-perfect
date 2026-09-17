@@ -1,0 +1,158 @@
+.consult {
+  background: var(--wash);
+  padding-block: 5rem;
+  scroll-margin-top: calc(var(--header-h) + var(--safe-top));
+}
+
+.consult__copy { margin-bottom: 2rem; }
+
+.consult__title {
+  margin: 0;
+  max-width: 12ch;
+  font-family: var(--ff-display);
+  font-size: clamp(2.4rem, 5.4vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.consult__title em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.consult__lead {
+  margin: 1.1rem 0 0;
+  max-width: 36ch;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.consult__actions {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 34rem;
+}
+
+.consult__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 70px;
+  padding: 1.1rem 1.85rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-family: var(--ff-body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background var(--t-ui) var(--ease-ui),
+    color var(--t-ui) var(--ease-ui),
+    border-color var(--t-ui) var(--ease-ui),
+    box-shadow var(--t-ui) var(--ease-ui),
+    transform var(--t-ui) var(--ease-out);
+}
+
+/* Primary — червоний акцент сайту */
+.consult__btn--call,
+.consult__btn--solid {
+  background: var(--red);
+  color: var(--on-btn);
+  border-color: var(--red);
+  box-shadow: 0 1px 0 rgb(20 24 36 / 0.06);
+}
+
+.consult__btn--call:hover,
+.consult__btn--call:focus-visible,
+.consult__btn--solid:hover,
+.consult__btn--solid:focus-visible {
+  background: var(--red-deep);
+  color: var(--on-btn);
+  border-color: var(--red-deep);
+  outline: none;
+}
+
+/* Secondary — темна заливка, білий текст */
+.consult__btn--mail,
+.consult__btn--ghost {
+  background: var(--ink);
+  color: var(--on-btn);
+  border-color: var(--ink);
+  box-shadow: 0 1px 0 rgb(20 24 36 / 0.06);
+}
+
+.consult__btn--mail:hover,
+.consult__btn--mail:focus-visible,
+.consult__btn--ghost:hover,
+.consult__btn--ghost:focus-visible {
+  background: var(--btn-hover);
+  color: var(--on-btn);
+  border-color: var(--btn-hover);
+  outline: none;
+}
+
+.consult__btn:active {
+  transform: scale(0.985);
+}
+
+@media (min-width: 640px) {
+  .consult__actions {
+    grid-template-columns: 1fr 1fr;
+    max-width: 38rem;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .consult { padding-block: 7rem; }
+}
+
+@media (min-width: 1024px) {
+  .consult__split {
+    display: grid;
+    grid-template-columns: minmax(18rem, 34rem) auto;
+    gap: 2.5rem 3rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .consult__copy { margin-bottom: 0; }
+
+  .consult__actions {
+    max-width: 32rem;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .consult__btn--call:hover,
+  .consult__btn--mail:hover,
+  .consult__btn--solid:hover,
+  .consult__btn--ghost:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgb(20 24 36 / 0.12);
+  }
+
+  .consult__btn--call:hover,
+  .consult__btn--solid:hover {
+    box-shadow: 0 8px 22px rgb(236 66 60 / 0.28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .consult__btn { transition: none; }
+  .consult__btn:active,
+  .consult__btn--call:hover,
+  .consult__btn--mail:hover,
+  .consult__btn--solid:hover,
+  .consult__btn--ghost:hover {
+    transform: none;
+  }
+}

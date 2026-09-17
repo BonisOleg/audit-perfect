@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}is-home{% endblock %}
+{% block data_page %}home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/why.css' %}">
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+<link rel="stylesheet" href="{% static 'css/directions.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero-cine" aria-labelledby="hero-title">
+  <div class="hero-cine__shell">
+    <div class="hero-cine__media" aria-hidden="true">
+      <img
+        class="hero-cine__img"
+        src="{% static 'images/hero.webp' %}"
+        alt=""
+        width="2000"
+        height="1333"
+        fetchpriority="high"
+        decoding="async"
+      >
+      <div class="hero-cine__overlay"></div>
+    </div>
+    <div class="hero-cine__content">
+      <p class="hero-cine__eyebrow">{{ site.tagline }}</p>
+      <h1 id="hero-title" class="hero-cine__title">
+        {% if blocks.hero_title %}{{ blocks.hero_title.body }}{% else %}Супроводжуємо бізнес у звітності, перевірках і призначенні статусу критично важливого підприємства.{% endif %}
+      </h1>
+      <p class="hero-cine__lead">
+        {% if blocks.hero_lead %}{{ blocks.hero_lead.body }}{% else %}Аудит, облік, трансфертне ціноутворення, КІК, військовий облік і юридичний супровід — однією командою.{% endif %}
+      </p>
+      <div class="hero-cine__actions">
+        <a class="hero-cine__btn hero-cine__btn--call" href="tel:{{ site.phone_href }}">Зателефонувати</a>
+        <a class="hero-cine__btn hero-cine__btn--ghost" href="{% url 'services:list' %}">Усі послуги</a>
+      </div>
+    </div>
+    <a class="hero-cine__scroll" href="#napriamy">
+      <span class="hero-cine__scroll-label">Далі</span>
+      <span class="hero-cine__scroll-line" aria-hidden="true"></span>
+    </a>
+  </div>
+</section>
+
+<section class="directions directions--home" id="napriamy">
+  <div class="container directions__split">
+    <header class="directions__intro reveal">
+      <p class="section-kicker">Сім напрямів</p>
+      <h2 class="directions__title">Напрями <em>роботи</em></h2>
+      <p class="directions__lead">Комплексний супровід бізнесу в одній команді. Деталі напрямів — у каталозі.</p>
+      <a class="directions__cta" href="{% url 'services:list' %}">Каталог послуг</a>
+    </header>
+    <ol class="directions__list">
+      {% for s in services %}
+      <li class="directions__row reveal">
+        <a href="{{ s.get_absolute_url }}">
+          <span class="directions__name">{{ s.title }}</span>
+          <p class="directions__hint">{{ s.short_description }}</p>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="why" id="chomu">
+  <div class="container why__split">
+    <header class="why__intro reveal">
+      <p class="section-kicker">Підхід</p>
+      <h2 class="why__title">Чому <em>з нами</em></h2>
+      <p class="why__lead">Одна команда веде справу до досягнення мети.</p>
+    </header>
+    <div class="why__grid">
+      <article class="why__item reveal">
+        <h3>Одна команда</h3>
+        <p>Одна команда веде справу до досягнення мети.</p>
+      </article>
+      <article class="why__item reveal">
+        <h3>Статус критичності</h3>
+        <p>Супровід на кожному етапі до позитивного результату.</p>
+      </article>
+      <article class="why__item reveal">
+        <h3>Супровід перевірок</h3>
+        <p>Звільняємо бізнес від зайвої витрати часу та нервів.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="feed" id="novyny">
+  <div class="container feed__split">
+    <header class="feed__intro reveal">
+      <p class="section-kicker">Стрічка</p>
+      <h2 class="feed__title">Новини</h2>
+      <a class="feed__cta" href="{% url 'news:list' %}">Уся стрічка</a>
+    </header>
+    <div class="feed__items">
+      {% for article in latest_news %}
+      <a class="{% if forloop.first %}feed__lead{% else %}feed__item{% endif %} reveal" href="{{ article.get_absolute_url }}">
+        <time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"d.m.Y" }}</time>
+        <h3>{{ article.title }}</h3>
+      </a>
+      {% empty %}
+      <p>Новини зʼявляться незабаром.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/consult.html" %}
+{% endblock %}

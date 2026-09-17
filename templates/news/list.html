@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Новини — Аудит-Перфект{% endblock %}
+{% block meta_description %}Новини та аналітика Аудит-Перфект про аудит, облік і супровід бізнесу.{% endblock %}
+{% block data_page %}news{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+<link rel="stylesheet" href="{% static 'css/page-intro.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="page-intro page-intro--news">
+  <div class="container">
+    <p class="crumbs"><a href="{% url 'home' %}">Головна</a> · Новини</p>
+    <div class="page-intro__copy reveal">
+      <h1 class="page-intro__title">Новини</h1>
+      <p class="page-intro__lead">Зміни вимог, перевірки, обовʼязковий аудит — коротко для власників і фінансистів.</p>
+    </div>
+  </div>
+</header>
+
+<section class="feed feed--page" aria-label="Стрічка новин" id="novyny">
+  <div class="container">
+    <div class="feed__items">
+      {% for article in articles %}
+      <a
+        class="{% if forloop.first %}{% if is_paginated and page_obj.number != 1 %}feed__item{% else %}feed__lead{% endif %}{% else %}feed__item{% endif %} reveal"
+        href="{{ article.get_absolute_url }}"
+      >
+        <time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"d.m.Y" }}</time>
+        <h3>{{ article.title }}</h3>
+        {% if article.excerpt %}<p class="feed__hint">{{ article.excerpt }}</p>{% endif %}
+      </a>
+      {% empty %}
+      <p>Поки немає опублікованих матеріалів.</p>
+      {% endfor %}
+    </div>
+    {% if is_paginated %}
+    <nav class="pagination" aria-label="Сторінки новин">
+      {% if page_obj.has_previous %}
+      <a class="pagination__link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+      {% endif %}
+      <span class="pagination__status">Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+      <a class="pagination__link" href="?page={{ page_obj.next_page_number }}">Далі</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </div>
+</section>
+
+{% include "partials/consult.html" %}
+{% endblock %}

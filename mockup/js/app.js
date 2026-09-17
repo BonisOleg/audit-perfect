@@ -6,10 +6,10 @@
         link.classList.add("is-active");
       }
     });
-    const file = (location.pathname.split("/").pop() || "").split("?")[0];
+    const path = (location.pathname || "/").replace(/\/+$/, "") || "/";
     document.querySelectorAll(".nav-sub a, .drawer__panel a").forEach(function (link) {
-      const href = (link.getAttribute("href") || "").split("?")[0];
-      if (href && file && href === file) {
+      var href = (link.getAttribute("href") || "").split("?")[0].replace(/\/+$/, "") || "/";
+      if (href && path === href) {
         link.classList.add("is-active");
       }
     });
@@ -32,13 +32,13 @@
 
     const open = function () {
       menu.classList.add("is-open");
+      document.body.classList.add("is-drawer-open");
       openBtn.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
     };
     const close = function () {
       menu.classList.remove("is-open");
+      document.body.classList.remove("is-drawer-open");
       openBtn.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
     };
 
     openBtn.addEventListener("click", open);
@@ -116,7 +116,16 @@
     const item = document.querySelector(".nav-desktop .nav-item");
     if (!item) return;
     let timer = 0;
+    /* Після кліку/завантаження курсор може лишитись на пункті — не відкривати, доки не вийде і зайде знову */
+    let suppressUntilLeave = false;
+    try {
+      suppressUntilLeave = item.matches(":hover");
+    } catch (err) {
+      suppressUntilLeave = false;
+    }
+
     const open = function () {
+      if (suppressUntilLeave) return;
       window.clearTimeout(timer);
       item.classList.add("is-open");
     };
@@ -125,9 +134,16 @@
         item.classList.remove("is-open");
       }, 160);
     };
+
     item.addEventListener("mouseenter", open);
-    item.addEventListener("mouseleave", close);
-    item.addEventListener("focusin", open);
+    item.addEventListener("mouseleave", function () {
+      suppressUntilLeave = false;
+      close();
+    });
+    item.addEventListener("focusin", function () {
+      suppressUntilLeave = false;
+      open();
+    });
     item.addEventListener("focusout", function (e) {
       if (!item.contains(e.relatedTarget)) close();
     });
@@ -142,14 +158,9 @@
     share();
   }
 
-  var started = false;
-  function once() {
-    if (started) return;
-    started = true;
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
     boot();
   }
-
-  document.addEventListener("partials:ready", once);
-  if (!document.querySelector("[data-include]")) once();
-  window.setTimeout(once, 800);
 })();

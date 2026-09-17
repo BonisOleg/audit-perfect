@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Сторінку не знайдено — Аудит-Перфект{% endblock %}
+{% block data_page %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container error">
+  <div class="error__code reveal">404</div>
+  <h1 class="reveal">Такої сторінки немає</h1>
+  <p class="lead reveal">Адреса введена з помилкою або сторінку прибрали. Оберіть розділ у меню або поверніться на головну.</p>
+  <a class="btn btn--primary" href="{% url 'home' %}">На головну</a>
+</div>
+{% endblock %}

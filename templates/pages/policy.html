@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Політика конфіденційності — Аудит-Перфект{% endblock %}
+{% block data_page %}policy{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="page-hero">
+  <div class="container">
+    <p class="crumbs"><a href="{% url 'home' %}">Головна</a> · Політика конфіденційності</p>
+    <h1 class="reveal">Політика конфіденційності</h1>
+  </div>
+</header>
+<section class="section">
+  <div class="container prose reveal">
+    <p>На сайті немає форм заявок. Якщо ви самі телефонуєте або пишете листа, ми використовуємо номер і адресу лише щоб відповісти.</p>
+    <p>Дані не продаємо і не передаємо третім сторонам, крім випадків, яких вимагає закон. Текст на цій сторінці — чернетка; фінальну редакцію погодите з юристом.</p>
+    <p>Питання щодо даних: <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+  </div>
+</section>
+{% endblock %}

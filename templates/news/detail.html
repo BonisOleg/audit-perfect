@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ article.seo_title }}{% endblock %}
+{% block meta_description %}{{ article.seo_description }}{% endblock %}
+{% block data_page %}news{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<link rel="stylesheet" href="{% static 'css/page-intro.css' %}">
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="page-intro page-intro--article">
+  <div class="container">
+    <p class="crumbs">
+      <a href="{% url 'home' %}">Головна</a> ·
+      <a href="{% url 'news:list' %}">Новини</a> ·
+      {{ article.title|truncatechars:48 }}
+    </p>
+    <div class="page-intro__copy reveal">
+      <time class="article-date" datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"d.m.Y" }}</time>
+      <h1 class="page-intro__title">{{ article.title }}</h1>
+      {% if article.excerpt %}
+      <p class="page-intro__lead">{{ article.excerpt }}</p>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<section class="article" aria-label="Текст статті">
+  <div class="container">
+    <div class="article__prose reveal">
+      {{ article.body|linebreaks }}
+    </div>
+    <div class="article__footer reveal">
+      <div class="share share--inline" data-share aria-label="Поділитися статтею">
+        <p class="section-kicker">Поділитися статтею</p>
+        <div class="share__row">
+          <a href="#" data-share-telegram target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="#" data-share-facebook target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="#" data-share-linkedin target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <button type="button" data-share-copy>Скопіювати посилання</button>
+        </div>
+      </div>
+      {% if related_news %}
+      <nav class="news-more news-more--in-article" aria-label="Інші новини">
+        <p class="section-kicker">Інші новини</p>
+        <ul class="news-more__list">
+          {% for item in related_news %}
+          <li>
+            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/consult.html" %}
+{% endblock %}

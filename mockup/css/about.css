@@ -26,7 +26,7 @@
 
 .about-intro {
   padding-block: 2.75rem 2.5rem;
-  background: var(--bg);
+  background: var(--wash);
 }
 
 .about-intro .about-title { max-width: 12ch; }
@@ -39,11 +39,17 @@
   line-height: 1.6;
 }
 
-.about-story,
-.about-team {
+.about-story {
   padding-block: 5rem;
   scroll-margin-top: calc(var(--header-h) + var(--safe-top));
   background: var(--bg);
+}
+
+.about-team {
+  padding-block: 5rem;
+  scroll-margin-top: calc(var(--header-h) + var(--safe-top));
+  background: var(--ink);
+  color: #ffffff;
 }
 
 .about-story__intro,
@@ -72,24 +78,24 @@
 .about-stats__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem 1.5rem;
+  gap: 1.75rem 1.35rem;
 }
 
-.about-stats__item { padding-top: 1.15rem; }
+.about-stats__item { padding-top: 0.85rem; }
 
 .about-stats__item::before {
   content: "";
   display: block;
   width: 2.25rem;
   height: 1px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   background: var(--red);
 }
 
 .about-stats__num {
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.3rem;
   font-family: var(--ff-display);
-  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  font-size: clamp(2.15rem, 4.8vw, 3.35rem);
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1;
@@ -123,7 +129,8 @@
   overflow: hidden;
   margin-bottom: 0.95rem;
   aspect-ratio: 4 / 5;
-  background: var(--wash);
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.12);
 }
 
 .about-team__photo img {
@@ -131,11 +138,12 @@
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  filter: grayscale(0.18) saturate(0.78);
+  filter: grayscale(0.05) saturate(0.94);
 }
 
 .about-team__person h3 {
   margin: 0 0 0.25rem;
+  color: #ffffff;
   font-size: clamp(1.35rem, 2vw, 1.7rem);
   font-weight: 500;
 }
@@ -143,7 +151,8 @@
 .about-team__person p {
   margin: 0;
   max-width: none;
-  color: var(--muted);
+  color: rgb(255 255 255 / 0.58);
+  line-height: 1.45;
 }
 
 .about-certs__item { margin: 0; }
@@ -152,7 +161,8 @@
   overflow: hidden;
   aspect-ratio: 4 / 3;
   background: var(--bg);
-  border: 1px solid var(--line);
+  border: 1px solid rgb(20 24 36 / 0.16);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.8) inset;
 }
 
 .about-certs__frame img {
@@ -160,7 +170,7 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
-  background: #fff;
+  background: var(--bg);
   filter: none;
 }
 
@@ -176,8 +186,10 @@
   flex-direction: column;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1.25rem;
-  background: var(--wash);
+  padding: 1.25rem 1.35rem;
+  background: var(--bg);
+  border: 1px solid rgb(20 24 36 / 0.16);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.8) inset;
 }
 
 .about-certs__frame--text p {
@@ -219,7 +231,7 @@
 .about-cases__tag {
   margin: 0 0 0.45rem;
   color: var(--red);
-  font-size: 0.8rem;
+  font-size: 1.04rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   text-transform: none;
@@ -302,6 +314,9 @@
     margin-bottom: 0;
   }
 
-  .about-stats__grid { gap: 2.75rem 3rem; }
+  .about-stats__grid {
+    gap: 2rem 2.25rem;
+    padding-top: calc(1.04rem * 1.2 + 0.55rem + 0.65rem + 1px);
+  }
 }
 

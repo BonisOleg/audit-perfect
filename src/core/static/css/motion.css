@@ -1,0 +1,182 @@
+.hero-cine .reveal,
+.page-hero .reveal,
+.about-intro .reveal,
+.page-intro .reveal,
+.error .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 1.5rem, 0);
+  transition:
+    opacity var(--motion-reveal) var(--ease-reveal),
+    transform var(--motion-reveal) var(--ease-reveal);
+}
+
+html:not(.has-js) .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal--delay {
+  transition-delay: 140ms;
+}
+
+.reveal--delay-2 {
+  transition-delay: 260ms;
+}
+
+.directions__row:nth-child(1) {
+  transition-delay: 40ms;
+}
+
+.directions__row:nth-child(2) {
+  transition-delay: 140ms;
+}
+
+.directions__row:nth-child(3) {
+  transition-delay: 240ms;
+}
+
+.directions__row:nth-child(4) {
+  transition-delay: 340ms;
+}
+
+.directions__row:nth-child(5) {
+  transition-delay: 440ms;
+}
+
+.why__item:nth-child(1) {
+  transition-delay: 60ms;
+}
+
+.why__item:nth-child(2) {
+  transition-delay: 160ms;
+}
+
+.why__item:nth-child(3) {
+  transition-delay: 260ms;
+}
+
+.why__item:nth-child(4) {
+  transition-delay: 360ms;
+}
+
+.feed__lead {
+  transition-delay: 80ms;
+}
+
+.feed__item:nth-of-type(2) {
+  transition-delay: 180ms;
+}
+
+.feed__item:nth-of-type(3) {
+  transition-delay: 280ms;
+}
+
+.about-stats__item:nth-child(1) {
+  transition-delay: 60ms;
+}
+
+.about-stats__item:nth-child(2) {
+  transition-delay: 140ms;
+}
+
+.about-stats__item:nth-child(3) {
+  transition-delay: 220ms;
+}
+
+.about-stats__item:nth-child(4) {
+  transition-delay: 300ms;
+}
+
+.about-team__person:nth-child(1) {
+  transition-delay: 60ms;
+}
+
+.about-team__person:nth-child(2) {
+  transition-delay: 160ms;
+}
+
+.about-team__person:nth-child(3) {
+  transition-delay: 260ms;
+}
+
+.about-team__person:nth-child(4) {
+  transition-delay: 360ms;
+}
+
+.about-team__person:nth-child(5) {
+  transition-delay: 460ms;
+}
+
+.about-certs__item:nth-child(1) {
+  transition-delay: 60ms;
+}
+
+.about-certs__item:nth-child(2) {
+  transition-delay: 160ms;
+}
+
+.about-certs__item:nth-child(3) {
+  transition-delay: 260ms;
+}
+
+.about-certs__item:nth-child(4) {
+  transition-delay: 360ms;
+}
+
+.about-certs__item:nth-child(5) {
+  transition-delay: 460ms;
+}
+
+.about-cases__lead {
+  transition-delay: 80ms;
+}
+
+.about-cases__item:nth-of-type(2) {
+  transition-delay: 160ms;
+}
+
+.about-cases__item:nth-of-type(3) {
+  transition-delay: 240ms;
+}
+
+.about-cases__item:nth-of-type(4) {
+  transition-delay: 320ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn--primary:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--motion-soft) linear;
+  }
+
+  .nav-sub,
+  .drawer__panel,
+  .drawer__backdrop,
+  .news-row,
+  .hero-cine__btn {
+    transition: none;
+  }
+}

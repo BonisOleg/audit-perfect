@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Послуги — Аудит-Перфект{% endblock %}
+{% block meta_description %}Сім напрямів супроводу бізнесу: аудит, облік, ТЦ, КІК, військовий облік, юридичні та кадрові послуги.{% endblock %}
+{% block body_class %}is-services-list{% endblock %}
+{% block data_page %}services{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/page-intro.css' %}">
+<link rel="stylesheet" href="{% static 'css/directions.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="page-intro page-intro--catalog">
+  <div class="container">
+    <p class="crumbs"><a href="{% url 'home' %}">Головна</a> · Послуги</p>
+    <div class="page-intro__copy reveal">
+      <h1 class="page-intro__title">Послуги</h1>
+      <p class="page-intro__lead">Сім напрямів супроводу бізнесу — від аудиту до кадрового обліку.</p>
+    </div>
+  </div>
+</header>
+
+<section class="directions directions--catalog" aria-label="Напрями роботи">
+  <div class="container">
+    <ol class="directions__list">
+      {% for s in services %}
+      <li class="directions__row reveal">
+        <a href="{{ s.get_absolute_url }}">
+          <span class="directions__name">{{ s.title }}</span>
+          <p class="directions__hint">{{ s.short_description }}</p>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{% include "partials/consult.html" %}
+{% endblock %}

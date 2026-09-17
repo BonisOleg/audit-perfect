@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}{{ meta_title|default:site.default_meta_title }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ meta_description|default:site.default_meta_description }}{% endblock %}">
+  <link rel="canonical" href="{% block canonical %}{{ site_url }}{{ request.path }}{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ meta_title|default:site.default_meta_title }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ meta_description|default:site.default_meta_description }}{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site_url }}{{ request.path }}">
+  <meta property="og:locale" content="uk_UA">
+  <meta name="theme-color" content="#141824">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+  <link rel="stylesheet" href="{% static 'css/consult.css' %}">
+  <link rel="stylesheet" href="{% static 'css/motion.css' %}">
+  {% block extra_css %}{% endblock %}
+  {% if ga4_id %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+  <script src="{% static 'js/ga4.js' %}" data-ga4-id="{{ ga4_id }}"></script>
+  {% endif %}
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}" data-page="{% block data_page %}{% endblock %}">
+  <a class="skip-link" href="#main">Перейти до контенту</a>
+  {% include "partials/header.html" %}
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+  {% include "partials/footer.html" %}
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+  <script src="{% static 'js/app.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

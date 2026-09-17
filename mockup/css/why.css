@@ -13,6 +13,7 @@
   font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.035em;
+  white-space: nowrap;
 }
 
 .why__title em {
@@ -26,24 +27,39 @@
   max-width: 34ch;
   color: var(--muted);
   font-size: 1.05rem;
+  line-height: 1.55;
 }
 
 .why__grid {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 2rem 2.25rem;
+  justify-items: stretch;
+  counter-reset: why-item;
 }
 
 .why__item {
-  padding-top: 1.15rem;
+  position: relative;
+  padding-top: 0;
+  counter-increment: why-item;
+  max-width: 100%;
 }
 
 .why__item::before {
-  content: "";
+  content: counter(why-item, decimal-leading-zero);
   display: block;
-  width: 2.25rem;
-  height: 1px;
   margin-bottom: 1rem;
-  background: var(--red);
+  padding-bottom: 0.55rem;
+  color: var(--red);
+  font-family: var(--ff-body);
+  font-size: 1.04rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  background-image: linear-gradient(var(--red), var(--red));
+  background-size: 2.25rem 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
 }
 
 .why__item h3 {
@@ -52,39 +68,54 @@
   font-size: clamp(1.45rem, 2.2vw, 1.85rem);
   font-weight: 500;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .why__item p {
   margin: 0;
+  max-width: 32ch;
   color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+@media (min-width: 640px) {
+  .why__grid {
+    grid-template-columns: repeat(2, minmax(min-content, 1fr));
+    gap: 2.75rem 2rem;
+  }
+
+  /* Самотній останній ряд (2+1) — по центру */
+  .why__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: max-content;
+    max-width: 100%;
+  }
 }
 
 @media (min-width: 768px) {
   .why { padding-block: 7rem; }
-
-  .why__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2.75rem 2rem;
-  }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+/* Коли три колонки влазять — скинути центрування останнього */
+@media (min-width: 1200px) {
   .why__grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
   }
 
-  .why__item:last-child {
-    grid-column: 1 / -1;
-    max-width: 28rem;
-    justify-self: center;
+  .why__item:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-self: stretch;
+    width: auto;
   }
 }
 
 @media (min-width: 1024px) {
   .why__split {
     display: grid;
-    grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
-    gap: 4rem 5rem;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 4rem 4.5rem;
     align-items: start;
   }
 
@@ -92,5 +123,44 @@
     position: sticky;
     top: calc(var(--header-h) + 1.5rem);
     margin-bottom: 0;
+    max-width: 28rem;
+  }
+
+  .why__grid {
+    padding-top: calc(1.04rem * 1.2 + 0.55rem + 0.65rem + 1px);
   }
 }
+
+/* У split справа часто лише 2 колонки — тримаємо 2+1 з центром */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .why__grid {
+    grid-template-columns: repeat(2, minmax(min-content, 1fr));
+  }
+
+  .why__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: max-content;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .why__grid {
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+  }
+
+  .why__item:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-self: stretch;
+    width: auto;
+  }
+}
+
+@media (max-width: 379px) {
+  .why__title,
+  .why__item h3 {
+    white-space: normal;
+  }
+}
+

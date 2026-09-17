@@ -1,0 +1,36 @@
+<footer class="site-footer">
+  <div class="footer__grid">
+    <div>
+      <a class="footer__brand" href="{% url 'home' %}">
+        <span class="footer__brand-name">{{ site.site_name }}</span>
+        <span class="footer__brand-tag">{{ site.tagline }}</span>
+      </a>
+      <p>Аудит, облік, трансфертне ціноутворення, КІК, військовий облік і юридичний супровід — однією командою.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Підвал">
+      <a href="{% url 'home' %}">Головна</a>
+      <a href="{% url 'pages:about' %}">Про нас</a>
+      <a href="{% url 'services:list' %}">Послуги</a>
+      <a href="{% url 'news:list' %}">Новини</a>
+      <a href="{% url 'pages:contacts' %}">Контакти</a>
+      <a href="{% url 'pages:policy' %}">Політика конфіденційності</a>
+    </nav>
+    <div>
+      <a href="tel:{{ site.phone_href }}">{{ site.phone }}</a><br>
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+      <p>{{ site.address }}</p>
+    </div>
+  </div>
+  <div class="footer__meta">
+    <span>© 2026 {{ site.site_name }}</span>
+    <span class="footer__credit">
+      {% if is_homepage %}
+      Сайт зроблено в
+      <a class="footer__credit-link" href="https://www.prometeylabs.com/corporate-website-v2/" rel="nofollow noopener noreferrer" target="_blank"><span class="footer__credit-prometey">Prometey</span><span class="footer__credit-labs">Labs</span></a>
+      {% else %}
+      Сайт зроблено в
+      <span class="footer__credit-name"><span class="footer__credit-prometey">Prometey</span><span class="footer__credit-labs">Labs</span></span>
+      {% endif %}
+    </span>
+  </div>
+</footer>

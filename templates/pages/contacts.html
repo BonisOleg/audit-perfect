@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Контакти — Аудит-Перфект{% endblock %}
+{% block data_page %}contacts{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contacts.css' %}">
+<link rel="stylesheet" href="{% static 'css/page-intro.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="page-intro page-intro--contacts">
+  <div class="container">
+    <p class="crumbs"><a href="{% url 'home' %}">Головна</a> · Контакти</p>
+    <div class="page-intro__copy reveal">
+      <h1 class="page-intro__title">Контакти</h1>
+      <p class="page-intro__lead">Заявок немає — одразу дзвінок або лист. Офіс у Києві, графік і дорога нижче.</p>
+    </div>
+  </div>
+</header>
+
+<section class="office" aria-label="Реквізити">
+  <div class="container office__split">
+    <div class="office__aside reveal">
+      <header class="office__intro">
+        <p class="section-kicker">Реквізити</p>
+        <h2 class="office__title">Офіс у <em>Києві</em></h2>
+      </header>
+      <ul class="office__list">
+        <li>
+          <span class="office__label">Телефон</span>
+          <a href="tel:{{ site.phone_href }}">{{ site.phone }}</a>
+        </li>
+        {% if site.phone_secondary and site.phone_secondary_href %}
+        <li>
+          <span class="office__label">Додатковий</span>
+          <a href="tel:{{ site.phone_secondary_href }}">{{ site.phone_secondary }}</a>
+        </li>
+        {% endif %}
+        {% if site.telegram_url %}
+        <li>
+          <span class="office__label">Telegram</span>
+          <a href="{{ site.telegram_url }}" target="_blank" rel="noopener noreferrer">{{ site.telegram_label }}</a>
+        </li>
+        {% endif %}
+        <li>
+          <span class="office__label">Пошта</span>
+          <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+        </li>
+        <li>
+          <span class="office__label">Адреса</span>
+          <a href="{{ site.maps_link }}" target="_blank" rel="noopener noreferrer">{{ site.address }}</a>
+        </li>
+      </ul>
+      {% if site.legal_name or site.edrpou or site.registry_number %}
+      <ul class="office__legal" aria-label="Юридичні дані">
+        {% if site.legal_name %}
+        <li>
+          <span class="office__label">Юридична назва</span>
+          <span class="office__value">{{ site.legal_name }}</span>
+        </li>
+        {% endif %}
+        {% if site.edrpou %}
+        <li>
+          <span class="office__label">ЄДРПОУ</span>
+          <span class="office__value">{{ site.edrpou }}</span>
+        </li>
+        {% endif %}
+        {% if site.registry_number %}
+        <li>
+          <span class="office__label">Реєстр аудиторів</span>
+          {% if site.registry_url %}
+          <a href="{{ site.registry_url }}" target="_blank" rel="noopener noreferrer">№ {{ site.registry_number }}</a>
+          {% else %}
+          <span class="office__value">№ {{ site.registry_number }}</span>
+          {% endif %}
+        </li>
+        {% endif %}
+      </ul>
+      {% endif %}
+    </div>
+    <div class="office__map-wrap reveal reveal--delay">
+      <div class="office__map">
+        <iframe
+          title="Карта офісу"
+          loading="lazy"
+          src="{% if site.map_embed_url %}{{ site.map_embed_url }}{% else %}https://www.openstreetmap.org/export/embed.html?bbox=30.508,50.450,30.524,50.459&amp;layer=mapnik&amp;marker=50.4547,30.5164{% endif %}"
+        ></iframe>
+      </div>
+      <p class="office__map-action">
+        <a href="{{ site.maps_link }}" target="_blank" rel="noopener noreferrer">Відкрити в Google Maps</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="vizyt" aria-labelledby="visit-title">
+  <div class="container">
+    <header class="visit__intro reveal">
+      <p class="section-kicker">Візит</p>
+      <h2 class="visit__title" id="visit-title">Графік і <em>дорога</em></h2>
+      <p class="visit__lead">Перед візитом краще узгодити час телефоном або листом.</p>
+    </header>
+    <div class="visit__grid">
+      <article class="visit__card reveal">
+        <p class="section-kicker">Графік роботи</p>
+        <dl class="visit__dl">
+          <div>
+            <dt>Пн–Пт</dt>
+            <dd>{{ site.hours_weekdays }}</dd>
+          </div>
+          <div>
+            <dt>Сб–Нд</dt>
+            <dd>{{ site.hours_weekend }}</dd>
+          </div>
+        </dl>
+        {% if site.hours_note %}
+        <p class="visit__note">{{ site.hours_note }}</p>
+        {% endif %}
+      </article>
+      {% if site.visit_direction_lines %}
+      <article class="visit__card reveal reveal--delay">
+        <p class="section-kicker">Як дістатися</p>
+        <ul class="visit__points">
+          {% for line in site.visit_direction_lines %}
+          <li>{{ line }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

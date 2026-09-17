@@ -1,0 +1,113 @@
+.site-footer {
+  flex-shrink: 0;
+  background: var(--ink);
+  color: #d7dbe6;
+  padding:
+    3rem var(--pad)
+    calc(1.5rem + var(--safe-bottom));
+}
+
+.footer__grid {
+  width: min(100%, var(--container));
+  margin-inline: auto;
+  display: grid;
+  gap: 2rem;
+}
+
+.site-footer a {
+  color: #d7dbe6;
+  text-decoration: none;
+}
+
+.site-footer a:hover { color: #ffd2cf; }
+
+.footer__brand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--ff-body);
+  font-weight: 700;
+  font-size: 1.36rem;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer__brand-name { color: #ffffff; }
+
+.footer__brand-tag {
+  font-size: 0.81rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--red);
+}
+
+.footer__brand:hover { color: #ffffff; }
+.footer__brand:hover .footer__brand-name { color: #ffd2cf; }
+
+.footer__nav {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.footer__meta {
+  width: min(100%, var(--container));
+  margin: 2rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+}
+
+.footer__credit {
+  color: #e65100;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  -webkit-text-size-adjust: 100%;
+}
+
+.footer__credit-link,
+.footer__credit-name {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer__credit-prometey { color: #f2f4f8; }
+
+.footer__credit-labs { color: #7b2cbf; }
+
+.site-footer .footer__credit-link {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity var(--t-ui) var(--ease-ui);
+}
+
+.site-footer .footer__credit-link:hover,
+.site-footer .footer__credit-link:focus-visible {
+  color: inherit;
+  opacity: 1;
+  outline: none;
+}
+
+.site-footer .footer__credit-link:hover .footer__credit-prometey,
+.site-footer .footer__credit-link:focus-visible .footer__credit-prometey {
+  color: #7b2cbf;
+}
+
+.site-footer .footer__credit-link:hover .footer__credit-labs,
+.site-footer .footer__credit-link:focus-visible .footer__credit-labs {
+  color: #e65100;
+}
+
+@media (min-width: 768px) {
+  .footer__grid {
+    grid-template-columns: 1.3fr 1fr 1fr;
+  }
+}
