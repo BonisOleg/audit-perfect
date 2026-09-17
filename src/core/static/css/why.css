@@ -79,18 +79,18 @@
   line-height: 1.55;
 }
 
-/* 2 колонки: самотній останній ряд по центру */
+/* Планшет / широкий мобайл: 2+1, обидва ряди по центру */
 @media (min-width: 640px) {
   .why__grid {
-    grid-template-columns: repeat(2, minmax(min-content, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2.75rem 2rem;
   }
 
-  .why__item:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    justify-self: center;
+  .why__item {
     width: max-content;
-    max-width: 100%;
+    max-width: calc(50% - 1rem);
   }
 }
 
@@ -114,7 +114,22 @@
   }
 
   .why__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content, 1fr));
+    justify-content: start;
     padding-top: calc(1.04rem * 1.2 + 0.55rem + 0.65rem + 1px);
+  }
+
+  .why__item {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .why__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: max-content;
+    max-width: 100%;
   }
 }
 

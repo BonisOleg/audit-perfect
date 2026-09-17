@@ -4,7 +4,9 @@
   scroll-margin-top: calc(var(--header-h) + var(--safe-top));
 }
 
-.why__intro { margin-bottom: 2.5rem; }
+.why__intro {
+  margin-bottom: 2.5rem;
+}
 
 .why__title {
   margin: 0;
@@ -81,21 +83,22 @@
 
 @media (min-width: 640px) {
   .why__grid {
-    grid-template-columns: repeat(2, minmax(min-content, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2.75rem 2rem;
   }
 
-  /* Самотній останній ряд (2+1) — по центру */
-  .why__item:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    justify-self: center;
+  .why__item {
     width: max-content;
-    max-width: 100%;
+    max-width: calc(50% - 1rem);
   }
 }
 
 @media (min-width: 768px) {
-  .why { padding-block: 7rem; }
+  .why {
+    padding-block: 7rem;
+  }
 }
 
 /* Коли три колонки влазять — скинути центрування останнього */
@@ -127,7 +130,22 @@
   }
 
   .why__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content, 1fr));
+    justify-content: start;
     padding-top: calc(1.04rem * 1.2 + 0.55rem + 0.65rem + 1px);
+  }
+
+  .why__item {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .why__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: max-content;
+    max-width: 100%;
   }
 }
 
@@ -158,9 +176,9 @@
 }
 
 @media (max-width: 379px) {
+
   .why__title,
   .why__item h3 {
     white-space: normal;
   }
 }
-

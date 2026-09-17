@@ -7,7 +7,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/page-intro.css' %}">
-<link rel="stylesheet" href="{% static 'css/directions.css' %}">
+<link rel="stylesheet" href="{% static 'css/directions.css' %}?v={{ static_version }}">
 {% endblock %}
 
 {% block content %}
@@ -24,19 +24,21 @@
 
 <section class="directions directions--service" aria-label="Що входить">
   <div class="container directions__split">
-    <header class="directions__intro reveal">
-      <h2 class="directions__title">Що <em>входить</em></h2>
-      {% if service.audience %}
-      <p class="directions__audience">
-        <span class="directions__audience-label">Для кого</span>
-        {{ service.audience_body }}
-      </p>
-      {% endif %}
+    <div class="directions__aside">
+      <header class="directions__intro reveal">
+        <h2 class="directions__title">Що <em>входить</em></h2>
+        {% if service.audience %}
+        <p class="directions__audience">
+          <span class="directions__audience-label">Для кого</span>
+          {{ service.audience_body }}
+        </p>
+        {% endif %}
+      </header>
       <div class="directions__actions">
         <a class="directions__cta directions__cta--primary" href="#konsultacia">Замовити консультацію</a>
         <a class="directions__cta" href="{% url 'services:list' %}">Усі напрями</a>
       </div>
-    </header>
+    </div>
     <ol class="directions__list">
       {% for item in service.composition %}
       <li class="directions__row reveal">

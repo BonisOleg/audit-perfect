@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  <link rel="stylesheet" href="{% static 'css/header.css' %}?v={{ static_version }}">
   <link rel="stylesheet" href="{% static 'css/footer.css' %}">
   <link rel="stylesheet" href="{% static 'css/consult.css' %}">
   <link rel="stylesheet" href="{% static 'css/motion.css' %}">
@@ -37,7 +37,7 @@
   </main>
   {% include "partials/footer.html" %}
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
-  <script src="{% static 'js/app.js' %}" defer></script>
+  <script src="{% static 'js/app.js' %}?v={{ static_version }}" defer></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

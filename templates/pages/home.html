@@ -5,10 +5,10 @@
 {% block data_page %}home{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
-<link rel="stylesheet" href="{% static 'css/why.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v={{ static_version }}">
+<link rel="stylesheet" href="{% static 'css/why.css' %}?v={{ static_version }}">
 <link rel="stylesheet" href="{% static 'css/news.css' %}">
-<link rel="stylesheet" href="{% static 'css/directions.css' %}">
+<link rel="stylesheet" href="{% static 'css/directions.css' %}?v={{ static_version }}">
 <link rel="stylesheet" href="{% static 'css/pages.css' %}">
 {% endblock %}
 

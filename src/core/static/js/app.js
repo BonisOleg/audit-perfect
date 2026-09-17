@@ -30,18 +30,28 @@
     const backdrop = document.querySelector("[data-drawer-backdrop]");
     if (!menu || !openBtn) return;
 
+    const setExpanded = function (isOpen) {
+      openBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      openBtn.setAttribute("aria-label", isOpen ? "Закрити меню" : "Відкрити меню");
+    };
     const open = function () {
       menu.classList.add("is-open");
       document.body.classList.add("is-drawer-open");
-      openBtn.setAttribute("aria-expanded", "true");
+      setExpanded(true);
     };
     const close = function () {
       menu.classList.remove("is-open");
       document.body.classList.remove("is-drawer-open");
-      openBtn.setAttribute("aria-expanded", "false");
+      setExpanded(false);
     };
 
-    openBtn.addEventListener("click", open);
+    openBtn.addEventListener("click", function () {
+      if (menu.classList.contains("is-open")) {
+        close();
+      } else {
+        open();
+      }
+    });
     closeBtn && closeBtn.addEventListener("click", close);
     backdrop && backdrop.addEventListener("click", close);
     document.addEventListener("keydown", function (e) {

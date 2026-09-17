@@ -55,9 +55,9 @@
   </header>
   <div class="drawer" id="drawer" data-drawer>
     <div class="drawer__backdrop" data-drawer-backdrop></div>
+    <button class="drawer__close" type="button" data-menu-close aria-label="Закрити меню"></button>
     <div class="drawer__panel">
-      <button class="btn btn--ghost" type="button" data-menu-close>Закрити</button>
-      <nav aria-label="Мобільне меню">
+        <nav aria-label="Мобільне меню">
         <a href="index.html" data-nav="home">Головна</a>
         <a href="pro-nas.html" data-nav="about">Про нас</a>
         <a href="poslugy.html" data-nav="services">Послуги</a>
@@ -92,89 +92,15 @@
     </header>
     <section class="directions directions--service" aria-label="Що входить">
       <div class="container directions__split">
-        <header class="directions__intro reveal">
+        <div class="directions__aside">
+          <header class="directions__intro reveal">
           <h2 class="directions__title">Що <em>входить</em></h2>
           <p class="directions__audience">
             <span class="directions__audience-label">Для кого</span>
             Підприємства, яким потрібне повне або часткове ведення кадрового обліку та аудит кадрової документації.</p>
+          </header>
           <div class="directions__actions">
             <a class="directions__cta directions__cta--primary" href="#konsultacia">Замовити консультацію</a>
             <a class="directions__cta" href="poslugy.html">Усі напрями</a>
           </div>
-        </header>
-        <ol class="directions__list">
-          <li class="directions__row reveal">
-            <span class="directions__name">Аутсорсинг кадрового обліку</span>
-            <p class="directions__hint">Повне або часткове ведення кадрового обліку підприємства.</p>
-          </li>
-          <li class="directions__row reveal">
-            <span class="directions__name">Розробка кадрових документів</span>
-            <p class="directions__hint">Підготовка та розробка правил, положень та інших внутрішніх документів.</p>
-          </li>
-          <li class="directions__row reveal">
-            <span class="directions__name">Кадровий аудит</span>
-            <p class="directions__hint">Перевірка кадрової документації на її відповідність чинному законодавству.</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-    <nav class="service-more" aria-label="Інші напрями">
-      <div class="container">
-        <p class="section-kicker">Інші напрями</p>
-        <ul class="service-more__list">
-        <li><a href="poslugy-audytorski.html">Аудиторські послуги</a></li>
-        <li><a href="poslugy-buhgalterski.html">Бухгалтерські послуги</a></li>
-        <li><a href="poslugy-transfertne.html">Трансфертне ціноутворення</a></li>
-        <li><a href="poslugy-kik.html">Контрольовані іноземні компанії (КІК)</a></li>
-        <li><a href="poslugy-viyskovyy-oblik.html">Військовий облік</a></li>
-        <li><a href="poslugy-yurydychni.html">Юридичні послуги</a></li>
-        </ul>
-      </div>
-    </nav>
-    <section class="consult" id="konsultacia">
-      <div class="container consult__split">
-        <header class="consult__copy reveal">
-          <p class="section-kicker">Контакт</p>
-          <h2 class="consult__title">Потрібна <em>консультація</em></h2>
-                  </header>
-        <div class="consult__actions reveal reveal--delay">
-          <a class="consult__btn consult__btn--call" href="tel:+380443551822">Зателефонувати</a>
-          <a class="consult__btn consult__btn--mail" href="mailto:office@auditperfekt.ua">Написати листа</a>
         </div>
-      </div>
-    </section>
-  </main>
-  <div data-include="partials/footer.html">
-  <footer class="site-footer">
-    <div class="footer__grid">
-      <div>
-        <a class="footer__brand" href="index.html">
-          Аудит-Перфект
-          <span class="footer__brand-tag">Аудиторська фірма</span>
-        </a>
-        <p>Аудит, облік, трансфертне ціноутворення, КІК, військовий облік і юридичний супровід — однією командою.</p>
-      </div>
-      <nav class="footer__nav" aria-label="Підвал">
-        <a href="index.html">Головна</a>
-        <a href="pro-nas.html">Про нас</a>
-        <a href="poslugy.html">Послуги</a>
-        <a href="novyny.html">Новини</a>
-        <a href="kontakty.html">Контакти</a>
-        <a href="polityka.html">Політика конфіденційності</a>
-      </nav>
-      <div>
-        <a href="tel:+380443551822">+38 044 355 18 22</a><br>
-        <a href="mailto:office@auditperfekt.ua">office@auditperfekt.ua</a>
-        <p>вул. Велика Житомирська, 20, Київ</p>
-      </div>
-    </div>
-    <div class="footer__meta">
-      <span>© 2026 Аудит-Перфект</span>
-      <span class="footer__credit">Сайт зроблено в PrometeyLabs</span>
-    </div>
-  </footer>
-</div>
-  <script src="js/include.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>

@@ -223,6 +223,11 @@ body.is-services-list .nav-desktop .nav-item.is-open .nav-sub {
   place-content: center;
   gap: 5px;
   cursor: pointer;
+  flex-shrink: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .nav-toggle span {
@@ -257,6 +262,62 @@ body.is-services-list .nav-desktop .nav-item.is-open .nav-sub {
 
 .drawer.is-open { pointer-events: auto; }
 
+.drawer__close {
+  position: absolute;
+  top: calc(var(--safe-top) + (var(--header-h) - 44px) / 2);
+  right: var(--pad);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.drawer.is-open .drawer__close {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.drawer__close:hover,
+.drawer__close:focus-visible {
+  color: var(--red);
+}
+
+body.is-drawer-open .nav-toggle {
+  visibility: hidden;
+}
+
+.drawer__close::before,
+.drawer__close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 27px;
+  height: 2.25px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.drawer__close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.drawer__close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .drawer__backdrop {
   position: absolute;
   inset: 0;
@@ -276,7 +337,7 @@ body.is-services-list .nav-desktop .nav-item.is-open .nav-sub {
   background: var(--bg);
   color: var(--ink);
   padding:
-    calc(1.25rem + var(--safe-top))
+    calc(var(--header-h) + var(--safe-top) + 0.35rem)
     1.25rem
     calc(1.5rem + var(--safe-bottom));
   overflow-y: auto;
@@ -289,7 +350,7 @@ body.is-services-list .nav-desktop .nav-item.is-open .nav-sub {
 
 .drawer nav { display: grid; gap: 0.15rem; }
 
-.drawer a {
+.drawer a:not(.btn) {
   min-height: 44px;
   display: flex;
   align-items: center;
@@ -299,8 +360,8 @@ body.is-services-list .nav-desktop .nav-item.is-open .nav-sub {
   font-size: 1.2rem;
 }
 
-.drawer a:hover,
-.drawer a.is-active { color: var(--red); }
+.drawer a:not(.btn):hover,
+.drawer a:not(.btn).is-active { color: var(--red); }
 
 .drawer .header__mail {
   display: flex;
@@ -308,7 +369,15 @@ body.is-services-list .nav-desktop .nav-item.is-open .nav-sub {
   font-weight: 500;
 }
 
-.drawer .btn { margin-top: 0.75rem; }
+.drawer .btn {
+  margin-top: 0.75rem;
+  color: var(--on-btn);
+}
+
+.drawer .btn:hover,
+.drawer .btn:focus-visible {
+  color: var(--on-btn);
+}
 
 .drawer .nav-sub {
   position: static;
@@ -336,7 +405,8 @@ body.is-services-list .nav-desktop .nav-item.is-open .nav-sub {
 @media (min-width: 960px) {
   .nav-desktop { display: flex; }
   .header__phone { display: inline-flex; }
-  .nav-toggle { display: none; }
+  .nav-toggle,
+  .drawer__close { display: none; }
 }
 
 @media (hover: hover) and (pointer: fine) {
