@@ -42,7 +42,8 @@
 .about-story {
   padding-block: 5rem;
   scroll-margin-top: calc(var(--header-h) + var(--safe-top));
-  background: var(--bg);
+  background: var(--ink);
+  color: #ffffff;
 }
 
 .about-team {
@@ -59,7 +60,7 @@
 .about-story__prose p {
   margin: 0 0 1.15em;
   max-width: 58ch;
-  color: var(--ink);
+  color: rgb(255 255 255 / 0.82);
   font-size: 1.05rem;
   line-height: 1.7;
 }

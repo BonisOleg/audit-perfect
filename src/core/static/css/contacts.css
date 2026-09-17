@@ -1,6 +1,7 @@
 .office {
-  padding-block: 0.25rem 4.5rem;
-  background: var(--bg);
+  padding-block: 4.5rem;
+  background: var(--ink);
+  color: #ffffff;
 }
 
 .office__intro {
@@ -18,7 +19,12 @@
   letter-spacing: -0.035em;
 }
 
-.office__title em,
+.office__title em {
+  font-style: normal;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.55);
+}
+
 .visit__title em {
   font-style: normal;
   font-weight: 500;
@@ -29,18 +35,18 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgb(255 255 255 / 0.14);
 }
 
 .office__list li {
   padding: 1rem 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgb(255 255 255 / 0.14);
 }
 
 .office__label {
   display: block;
   margin: 0 0 0.3rem;
-  color: var(--muted);
+  color: rgb(255 255 255 / 0.55);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -53,7 +59,7 @@
   align-items: center;
   min-height: 44px;
   max-width: 100%;
-  color: var(--ink);
+  color: #ffffff;
   font-family: var(--ff-body);
   font-size: 1.05rem;
   font-weight: 600;
@@ -74,7 +80,7 @@
 
 .office__value {
   display: block;
-  color: var(--ink);
+  color: #ffffff;
   font-size: 1.05rem;
   font-weight: 600;
   line-height: 1.4;
@@ -85,12 +91,12 @@
   list-style: none;
   margin: 1.75rem 0 0;
   padding: 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgb(255 255 255 / 0.14);
 }
 
 .office__legal li {
   padding: 1rem 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgb(255 255 255 / 0.14);
 }
 
 .office__map-wrap {
@@ -99,8 +105,8 @@
 
 .office__map {
   overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--wash);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.06);
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
@@ -123,7 +129,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: var(--ink);
+  color: #ffffff;
   font-weight: 600;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
@@ -250,7 +256,7 @@
 
 @media (min-width: 768px) {
   .office {
-    padding-block: 0.5rem 5.5rem;
+    padding-block: 5.5rem;
   }
 
   .office__map-wrap {
