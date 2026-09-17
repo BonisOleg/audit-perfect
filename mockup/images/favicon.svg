@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Аудит-Перфект">
+  <rect width="32" height="32" rx="5" fill="#141824"/>
+  <path fill="#ffffff" d="M16 5.4 27 22.4h-4.2L21 18.2H11L9.2 22.4H5L16 5.4z"/>
+  <path fill="#141824" d="M16 9.6 18.4 14.6h-4.8L16 9.6z"/>
+  <rect x="10.6" y="15.7" width="10.8" height="2.5" fill="#ffffff"/>
+  <rect x="7.5" y="24.4" width="17" height="2.2" fill="#ec423c"/>
+</svg>

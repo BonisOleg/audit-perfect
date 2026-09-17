@@ -39,6 +39,14 @@
   line-height: 1.6;
 }
 
+.about-intro__lead p {
+  margin: 0;
+  max-width: none;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .about-story {
   padding-block: 5rem;
   scroll-margin-top: calc(var(--header-h) + var(--safe-top));

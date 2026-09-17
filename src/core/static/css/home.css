@@ -87,12 +87,28 @@
   color: var(--cine-ink);
 }
 
+.hero-cine__title p {
+  margin: 0;
+  max-width: none;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .hero-cine__lead {
   margin: 0 auto 1.85rem;
   max-width: 42ch;
   font-size: clamp(1.05rem, 2vw, 1.2rem);
   line-height: 1.55;
   color: var(--cine-muted);
+}
+
+.hero-cine__lead p {
+  margin: 0;
+  max-width: none;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .hero-cine__actions {

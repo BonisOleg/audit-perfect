@@ -111,19 +111,21 @@ UNFOLD = {
     "SHOW_HISTORY": True,
     "SIDEBAR": {
         "show_search": True,
+        "command_search": True,
+        "show_all_applications": False,
         "navigation": [
             {
-                "title": "Контент",
+                "title": "Сторінки",
                 "items": [
                     {
-                        "title": "Налаштування сайту",
-                        "icon": "settings",
-                        "link": reverse_lazy("admin:core_sitesettings_changelist"),
+                        "title": "Головна",
+                        "icon": "home",
+                        "link": reverse_lazy("admin:pages_homepage_changelist"),
                     },
                     {
-                        "title": "CMS-блоки",
-                        "icon": "view_module",
-                        "link": reverse_lazy("admin:core_siteblock_changelist"),
+                        "title": "Про нас",
+                        "icon": "info",
+                        "link": reverse_lazy("admin:pages_aboutpage_changelist"),
                     },
                     {
                         "title": "Послуги",
@@ -136,14 +138,25 @@ UNFOLD = {
                         "link": reverse_lazy("admin:news_news_changelist"),
                     },
                     {
-                        "title": "Команда",
-                        "icon": "groups",
-                        "link": reverse_lazy("admin:team_teammember_changelist"),
+                        "title": "Футер",
+                        "icon": "call",
+                        "link": reverse_lazy("admin:core_sitesettings_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Доступ",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Користувачі",
+                        "icon": "person",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
                     },
                     {
-                        "title": "Кейси",
-                        "icon": "folder",
-                        "link": reverse_lazy("admin:team_case_changelist"),
+                        "title": "Групи",
+                        "icon": "admin_panel_settings",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
                     },
                 ],
             },
@@ -152,6 +165,7 @@ UNFOLD = {
 }
 
 CONTENT_SECURITY_POLICY = {
+    "EXCLUDE_URL_PREFIXES": ("/admin/", "/tinymce/"),
     "DIRECTIVES": {
         "default-src": [SELF],
         "script-src": [SELF, NONCE, "https://www.googletagmanager.com"],

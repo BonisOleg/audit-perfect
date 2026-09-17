@@ -1,5 +1,6 @@
 from django.views.generic import DetailView, ListView
 
+from src.core.seo import apply_page_meta
 from src.news.models import News
 
 
@@ -15,6 +16,11 @@ class NewsListView(ListView):
     def get(self, request, *args, **kwargs):
         request.current_nav = "news"
         return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        apply_page_meta(ctx, "news")
+        return ctx
 
 
 class NewsDetailView(DetailView):

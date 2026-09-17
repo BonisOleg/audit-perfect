@@ -1,10 +1,20 @@
+from pathlib import Path
+
+from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from src.core.models import SiteBlock, SiteSettings
+from src.core.models import SiteSettings
 from src.news.models import News
+from src.pages.models import AboutPage, Certificate, HomePage
 from src.services.models import Service
 from src.team.models import Case, TeamMember
+
+CERTS_DIR = Path(__file__).resolve().parents[2] / "static" / "images" / "certs"
+CERTS = (
+    ("Свідоцтво про державну реєстрацію", "registration.webp", 1),
+    ("Диплом ACCA (DipIFR)", "acca.webp", 2),
+)
 
 SERVICES = [
     {
@@ -287,46 +297,30 @@ class Command(BaseCommand):
                 ),
                 "registry_number": "3975",
                 "registry_url": "https://register.apob.org.ua/uk/search",
+                "home_meta_title": "Аудит-Перфект — аудит, облік і супровід бізнесу",
+                "about_meta_title": "Про нас — Аудит-Перфект",
+                "contacts_meta_title": "Контакти — Аудит-Перфект",
+                "policy_meta_title": "Політика конфіденційності — Аудит-Перфект",
+                "services_meta_title": "Послуги — Аудит-Перфект",
+                "news_meta_title": "Новини — Аудит-Перфект",
             },
         )
         self.stdout.write(f"SiteSettings: {site}")
 
-        SiteBlock.objects.update_or_create(
-            page="home",
-            key="hero_title",
-            defaults={
-                "title": "Hero H1",
-                "body": (
-                    "Супроводжуємо бізнес у звітності, перевірках "
-                    "і призначенні статусу критично важливого підприємства."
-                ),
-                "is_visible": True,
-                "sort_order": 1,
-            },
-        )
-        SiteBlock.objects.update_or_create(
-            page="home",
-            key="hero_lead",
-            defaults={
-                "title": "Hero lead",
-                "body": (
-                    "Аудит, облік, трансфертне ціноутворення, КІК, "
-                    "військовий облік і юридичний супровід — однією командою."
-                ),
-                "is_visible": True,
-                "sort_order": 2,
-            },
-        )
-        SiteBlock.objects.update_or_create(
-            page="about",
-            key="about_story",
-            defaults={
-                "title": "Хто ми",
-                "body": ABOUT_STORY,
-                "is_visible": True,
-                "sort_order": 1,
-            },
-        )
+        HomePage.objects.update_or_create(pk=1, defaults={})
+        about, _ = AboutPage.objects.update_or_create(pk=1, defaults={"story": ABOUT_STORY})
+        self.stdout.write("Pages: Головна, Про нас")
+        for title, filename, order in CERTS:
+            cert, _ = Certificate.objects.get_or_create(
+                about=about,
+                title=title,
+                defaults={"sort_order": order, "is_active": True},
+            )
+            src = CERTS_DIR / filename
+            if src.is_file() and not cert.image:
+                with src.open("rb") as handle:
+                    cert.image.save(filename, File(handle), save=True)
+        self.stdout.write(f"Certificates: {Certificate.objects.count()}")
 
         for data in SERVICES:
             Service.objects.update_or_create(

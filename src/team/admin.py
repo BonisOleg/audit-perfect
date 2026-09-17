@@ -1,18 +1,17 @@
-from django.contrib import admin
-from unfold.admin import ModelAdmin
+from unfold.admin import TabularInline
 
 from src.team.models import Case, TeamMember
 
 
-@admin.register(TeamMember)
-class TeamMemberAdmin(ModelAdmin):
-    list_display = ("name", "sort_order", "is_active")
-    list_editable = ("sort_order", "is_active")
-    search_fields = ("name", "role")
+class TeamMemberInline(TabularInline):
+    model = TeamMember
+    extra = 0
+    fields = ("name", "role", "photo", "sort_order", "is_active")
+    ordering = ("sort_order", "name")
 
 
-@admin.register(Case)
-class CaseAdmin(ModelAdmin):
-    list_display = ("title", "industry", "sort_order", "is_active")
-    list_editable = ("sort_order", "is_active")
-    search_fields = ("title", "industry")
+class CaseInline(TabularInline):
+    model = Case
+    extra = 0
+    fields = ("title", "industry", "result", "sort_order", "is_active")
+    ordering = ("sort_order", "title")

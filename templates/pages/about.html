@@ -37,8 +37,7 @@
         <p class="section-kicker">Про нас</p>
         <h1 class="about-title">Про <em>компанію</em></h1>
       </div>
-      <p class="about-intro__lead reveal reveal--delay">Працюємо з власниками бізнесу, фінансовими директорами та
-        групами компаній, яким потрібна прозора звітність і конструктивний діалог з контролюючими органами.</p>
+      <div class="about-intro__lead reveal reveal--delay">{{ page.lead_html }}</div>
     </div>
   </div>
 </header>
@@ -51,12 +50,7 @@
       <p class="about-lead about-lead--on-ink">Від аудиторської фірми до комплексного партнера для бізнесу.</p>
     </header>
     <div class="about-story__prose reveal reveal--delay">
-      {% if blocks.about_story %}
-      {{ blocks.about_story.body|linebreaks }}
-      {% else %}
-      <p>ПП «АФ «Аудит-Перфект»» розпочала свою діяльність у 2007 році. За роки роботи компанія пройшла шлях від
-        аудиторської фірми до комплексного партнера для бізнесу.</p>
-      {% endif %}
+      {{ page.story_html }}
     </div>
   </div>
 </section>
@@ -68,6 +62,14 @@
       <h2 class="about-title">Цифри <em>на ринку</em></h2>
     </header>
     <div class="about-stats__grid">
+      {% if stat_items %}
+      {% for item in stat_items %}
+      <article class="about-stats__item reveal">
+        <p class="about-stats__num">{{ item.value }}</p>
+        <p class="about-stats__cap">{{ item.label }}</p>
+      </article>
+      {% endfor %}
+      {% else %}
       <article class="about-stats__item reveal">
         <p class="about-stats__num">19</p>
         <p class="about-stats__cap">років на ринку</p>
@@ -84,6 +86,7 @@
         <p class="about-stats__num">50</p>
         <p class="about-stats__cap">супроводжених аудитів</p>
       </article>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -115,9 +118,9 @@
 <section class="about-certs" id="sertyfikaty">
   <div class="container">
     <header class="about-certs__intro reveal">
-      <p class="section-kicker">Допуски</p>
-      <h2 class="about-title">Сертифікати</h2>
-      <p class="about-lead">Реєстр аудиторів та документи фірми.</p>
+      <p class="section-kicker">{{ page.certs_kicker }}</p>
+      <h2 class="about-title">{{ page.certs_title }}</h2>
+      {% if page.certs_lead %}<p class="about-lead">{{ page.certs_lead }}</p>{% endif %}
     </header>
     <div class="about-certs__grid">
       <article class="about-certs__item about-certs__item--link reveal">
@@ -128,48 +131,32 @@
         </div>
         <p class="about-certs__cap">Реєстровий номер</p>
       </article>
+      {% for cert in certificates %}
       <figure class="about-certs__item reveal">
         <button
           type="button"
           class="about-certs__frame about-certs__frame--zoom"
-          data-certs-open="0"
+          data-certs-open="{{ forloop.counter0 }}"
           aria-haspopup="dialog"
-          aria-label="Збільшити: Свідоцтво про державну реєстрацію"
+          aria-label="Збільшити: {{ cert.title }}"
         >
           <img
-            src="{% static 'images/certs/registration.webp' %}"
-            alt="Свідоцтво про державну реєстрацію"
+            src="{{ cert.image.url }}"
+            alt="{{ cert.title }}"
             width="1400"
             height="1000"
             loading="lazy"
             decoding="async"
           >
         </button>
-        <figcaption>Свідоцтво про державну реєстрацію</figcaption>
+        <figcaption>{{ cert.title }}</figcaption>
       </figure>
-      <figure class="about-certs__item reveal">
-        <button
-          type="button"
-          class="about-certs__frame about-certs__frame--zoom"
-          data-certs-open="1"
-          aria-haspopup="dialog"
-          aria-label="Збільшити: Диплом ACCA (DipIFR)"
-        >
-          <img
-            src="{% static 'images/certs/acca.webp' %}"
-            alt="Диплом ACCA з Міжнародної фінансової звітності"
-            width="1400"
-            height="1000"
-            loading="lazy"
-            decoding="async"
-          >
-        </button>
-        <figcaption>Диплом ACCA (DipIFR)</figcaption>
-      </figure>
+      {% endfor %}
     </div>
   </div>
 </section>
 
+{% if certificates %}
 <dialog class="certs-lb" data-certs-lb aria-label="Перегляд сертифікатів">
   <button type="button" class="certs-lb__backdrop" data-certs-close aria-label="Закрити"></button>
   <div class="certs-lb__shell">
@@ -178,33 +165,30 @@
     <button type="button" class="certs-lb__nav certs-lb__nav--next" data-certs-next aria-label="Наступний">›</button>
     <div class="certs-lb__viewport" data-certs-viewport>
       <ul class="certs-lb__track" data-certs-track>
-        <li class="certs-lb__slide" data-certs-slide data-caption="Свідоцтво про державну реєстрацію">
+        {% for cert in certificates %}
+        <li class="certs-lb__slide" data-certs-slide data-caption="{{ cert.title }}">
           <img
-            src="{% static 'images/certs/registration.webp' %}"
-            alt="Свідоцтво про державну реєстрацію"
+            src="{{ cert.image.url }}"
+            alt="{{ cert.title }}"
             width="1400"
             height="1000"
             decoding="async"
           >
         </li>
-        <li class="certs-lb__slide" data-certs-slide data-caption="Диплом ACCA (DipIFR)">
-          <img
-            src="{% static 'images/certs/acca.webp' %}"
-            alt="Диплом ACCA з Міжнародної фінансової звітності"
-            width="1400"
-            height="1000"
-            decoding="async"
-          >
-        </li>
+        {% endfor %}
       </ul>
     </div>
     <p class="certs-lb__cap" data-certs-cap></p>
     <ul class="certs-lb__dots" aria-label="Слайди">
-      <li><button type="button" class="certs-lb__dot" data-certs-dot="0" aria-label="Слайд 1"></button></li>
-      <li><button type="button" class="certs-lb__dot" data-certs-dot="1" aria-label="Слайд 2"></button></li>
+      {% for cert in certificates %}
+      <li>
+        <button type="button" class="certs-lb__dot" data-certs-dot="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter }}"></button>
+      </li>
+      {% endfor %}
     </ul>
   </div>
 </dialog>
+{% endif %}
 
 <section class="about-cases" id="kejsy">
   <div class="container about-cases__split">

@@ -1,16 +1,9 @@
 from django.views.generic import TemplateView
 
-from src.core.models import SiteBlock
+from src.core.seo import apply_page_meta
 from src.news.models import News
+from src.pages.models import AboutPage, HomePage
 from src.services.models import Service
-from src.team.models import Case, TeamMember
-
-
-def _blocks(page: str) -> dict[str, SiteBlock]:
-    return {
-        b.key: b
-        for b in SiteBlock.objects.filter(page=page, is_visible=True)
-    }
 
 
 class HomeView(TemplateView):
@@ -22,14 +15,12 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["blocks"] = _blocks("home")
+        page = HomePage.load()
+        ctx["page"] = page
+        ctx["why_items"] = page.why_items
         ctx["services"] = Service.objects.filter(is_active=True).order_by("sort_order")
         ctx["latest_news"] = News.objects.filter(is_published=True)[:3]
-        ctx["meta_title"] = "Аудит-Перфект — аудит, облік і супровід бізнесу"
-        ctx["meta_description"] = (
-            "Супроводжуємо бізнес у звітності, перевірках "
-            "і призначенні статусу критично важливого підприємства."
-        )
+        apply_page_meta(ctx, "home", page)
         return ctx
 
 
@@ -42,14 +33,15 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["blocks"] = _blocks("about")
-        ctx["team"] = TeamMember.objects.filter(is_active=True).order_by("sort_order")
-        ctx["cases"] = Case.objects.filter(is_active=True).order_by("sort_order")
-        ctx["meta_title"] = "Про нас — Аудит-Перфект"
-        ctx["meta_description"] = (
-            "ПП «АФ «Аудит-Перфект»»: аудит, облік, ТЦ, КІК, військовий облік "
-            "та юридичний супровід з 2007 року."
-        )
+        page = AboutPage.load()
+        ctx["page"] = page
+        ctx["stat_items"] = page.stat_items
+        ctx["team"] = page.members.filter(is_active=True).order_by("sort_order")
+        ctx["cases"] = page.work_cases.filter(is_active=True).order_by("sort_order")
+        ctx["certificates"] = page.certificates.filter(
+            is_active=True,
+        ).exclude(image="").order_by("sort_order", "id")
+        apply_page_meta(ctx, "about", page)
         return ctx
 
 
@@ -62,11 +54,7 @@ class ContactsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["meta_title"] = "Контакти — Аудит-Перфект"
-        ctx["meta_description"] = (
-            "Телефон, email, адреса офісу Аудит-Перфект у Києві, "
-            "графік роботи та як дістатися."
-        )
+        apply_page_meta(ctx, "contacts")
         return ctx
 
 
@@ -79,8 +67,5 @@ class PolicyView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["meta_title"] = "Політика конфіденційності — Аудит-Перфект"
-        ctx["meta_description"] = (
-            "Як Аудит-Перфект обробляє персональні дані відвідувачів сайту."
-        )
+        apply_page_meta(ctx, "policy")
         return ctx

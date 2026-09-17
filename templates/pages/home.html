@@ -29,12 +29,8 @@
     </div>
     <div class="hero-cine__content">
       <p class="hero-cine__eyebrow">{{ site.tagline }}</p>
-      <h1 id="hero-title" class="hero-cine__title">
-        {% if blocks.hero_title %}{{ blocks.hero_title.body }}{% else %}Супроводжуємо бізнес у звітності, перевірках і призначенні статусу критично важливого підприємства.{% endif %}
-      </h1>
-      <p class="hero-cine__lead">
-        {% if blocks.hero_lead %}{{ blocks.hero_lead.body }}{% else %}Аудит, облік, трансфертне ціноутворення, КІК, військовий облік і юридичний супровід — однією командою.{% endif %}
-      </p>
+      <h1 id="hero-title" class="hero-cine__title">{{ page.hero_title_html }}</h1>
+      <div class="hero-cine__lead">{{ page.hero_lead_html }}</div>
       <div class="hero-cine__actions">
         <a class="hero-cine__btn hero-cine__btn--call" href="tel:{{ site.phone_href }}">Зателефонувати</a>
         <a class="hero-cine__btn hero-cine__btn--ghost" href="{% url 'services:list' %}">Усі послуги</a>
@@ -50,9 +46,9 @@
 <section class="directions directions--home" id="napriamy">
   <div class="container directions__split">
     <header class="directions__intro reveal">
-      <p class="section-kicker">Сім напрямів</p>
-      <h2 class="directions__title">Напрями <em>роботи</em></h2>
-      <p class="directions__lead">Комплексний супровід бізнесу в одній команді. Деталі напрямів — у каталозі.</p>
+      <p class="section-kicker">{{ page.directions_kicker }}</p>
+      <h2 class="directions__title">{{ page.directions_title }}</h2>
+      <p class="directions__lead">{{ page.directions_lead }}</p>
       <a class="directions__cta" href="{% url 'services:list' %}">Каталог послуг</a>
     </header>
     <ol class="directions__list">
@@ -71,11 +67,19 @@
 <section class="why" id="chomu">
   <div class="container why__split">
     <header class="why__intro reveal">
-      <p class="section-kicker">Підхід</p>
-      <h2 class="why__title">Чому <em>з нами</em></h2>
-      <p class="why__lead">Одна команда веде справу до досягнення мети.</p>
+      <p class="section-kicker">{{ page.why_kicker }}</p>
+      <h2 class="why__title">{{ page.why_title }}</h2>
+      <p class="why__lead">{{ page.why_lead }}</p>
     </header>
     <div class="why__grid">
+      {% if why_items %}
+      {% for item in why_items %}
+      <article class="why__item reveal">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.body }}</p>
+      </article>
+      {% endfor %}
+      {% else %}
       <article class="why__item reveal">
         <h3>Одна команда</h3>
         <p>Одна команда веде справу до досягнення мети.</p>
@@ -88,6 +92,7 @@
         <h3>Супровід перевірок</h3>
         <p>Звільняємо бізнес від зайвої витрати часу та нервів.</p>
       </article>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -95,8 +100,8 @@
 <section class="feed" id="novyny">
   <div class="container feed__split">
     <header class="feed__intro reveal">
-      <p class="section-kicker">Стрічка</p>
-      <h2 class="feed__title">Новини</h2>
+      <p class="section-kicker">{{ page.news_kicker }}</p>
+      <h2 class="feed__title">{{ page.news_title }}</h2>
       <a class="feed__cta" href="{% url 'news:list' %}">Уся стрічка</a>
     </header>
     <div class="feed__items">

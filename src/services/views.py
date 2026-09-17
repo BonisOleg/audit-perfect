@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView, RedirectView
 
+from src.core.seo import apply_page_meta
 from src.services.models import Service
 
 
@@ -15,6 +16,11 @@ class ServiceListView(ListView):
     def get(self, request, *args, **kwargs):
         request.current_nav = "services"
         return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        apply_page_meta(ctx, "services")
+        return ctx
 
 
 class ServiceDetailView(DetailView):

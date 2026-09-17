@@ -10,7 +10,12 @@ def _static_asset_version() -> int:
     static_root = Path(settings.BASE_DIR) / "src" / "core" / "static"
     mtimes = [
         int(p.stat().st_mtime)
-        for pattern in ("css/**/*.css", "js/**/*.js")
+        for pattern in (
+            "css/**/*.css",
+            "js/**/*.js",
+            "images/favicon*",
+            "images/apple-touch-icon.png",
+        )
         for p in static_root.glob(pattern)
     ]
     return max(mtimes) if mtimes else 0

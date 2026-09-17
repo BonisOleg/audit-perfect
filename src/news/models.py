@@ -1,7 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.safestring import SafeString
 from django.utils.text import slugify
+
+from src.core.richtext import render_cms_text
 
 
 class News(models.Model):
@@ -37,3 +40,7 @@ class News(models.Model):
     @property
     def seo_description(self) -> str:
         return self.meta_description or self.excerpt
+
+    @property
+    def body_html(self) -> SafeString:
+        return render_cms_text(self.body)
