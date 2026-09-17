@@ -223,10 +223,18 @@
 }
 
 @media (min-width: 768px) {
+  .hero-cine__title { max-width: 33ch; }
+
   .news-row {
     grid-template-columns: 7rem 1fr;
     align-items: baseline;
     gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-cine__content {
+    width: min(56rem, calc(100% - (var(--pad) * 2)));
   }
 }
 
