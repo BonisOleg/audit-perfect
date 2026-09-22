@@ -1,11 +1,12 @@
 # Деплой на сервер Замовника
 
 1. Скопіювати репозиторій на сервер, створити `.env` з production-секретами.
-2. `docker compose up -d --build`
-3. `docker compose exec web python manage.py createsuperuser`
-4. Підключити домен і SSL (certbot / `django-docker-ssl`).
-5. GA4: додати `GA4_MEASUREMENT_ID` у `.env` після отримання ID від Замовника.
-6. Контакти/адвокатське свідоцтво — оновити в адмінці після матеріалів клієнта.
+2. `bash deploy/docker/install-docker.sh` (якщо Docker ще немає).
+3. `bash deploy/docker/deploy.sh` — HTTP по IP. Оновлення: `bash deploy/docker/deploy.sh --pull`.
+4. `docker compose exec web python manage.py createsuperuser`
+5. Підключити домен і SSL (certbot / `django-docker-ssl`).
+6. GA4: додати `GA4_MEASUREMENT_ID` у `.env` після отримання ID від Замовника.
+7. Контакти/адвокатське свідоцтво — оновити в адмінці після матеріалів клієнта.
 
 Локально без Docker:
 

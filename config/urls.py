@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.urls import include, path
 
 from src.core.sitemaps import NewsSitemap, ServiceSitemap, StaticViewSitemap
+from src.core.views import healthz
 from src.pages.views import HomeView
 
 sitemaps = {
@@ -32,6 +33,7 @@ urlpatterns = [
     path("", include("src.pages.urls")),
     path("poslugy/", include("src.services.urls")),
     path("novyny/", include("src.news.urls")),
+    path("healthz/", healthz, name="healthz"),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("robots.txt", robots_txt, name="robots"),
 ]

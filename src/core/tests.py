@@ -6,6 +6,13 @@ from src.core.richtext import render_cms_inline, render_cms_text
 from src.services.admin import _lines_to_composition
 
 
+class HealthzTests(TestCase):
+    def test_healthz(self):
+        response = self.client.get("/healthz/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"ok")
+
+
 class AdminFunctionalTests(TestCase):
     def setUp(self):
         self.client = Client()
