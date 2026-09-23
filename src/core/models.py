@@ -1,4 +1,14 @@
+from django.core.validators import RegexValidator
 from django.db import models
+from django.utils.safestring import mark_safe
+
+from src.core.fonts import (
+    DEFAULT_BODY,
+    DEFAULT_DISPLAY,
+    FONT_CHOICES,
+    font_stack,
+    google_fonts_href as build_google_fonts_href,
+)
 
 
 class SiteSettings(models.Model):
@@ -194,6 +204,48 @@ class SiteSettings(models.Model):
         max_length=120,
         default="Потрібна консультація",
     )
+    color_red = models.CharField(
+        "Червоний",
+        max_length=7,
+        default="#ec423c",
+        validators=[RegexValidator(r"^#[0-9A-Fa-f]{6}$")],
+    )
+    color_blue = models.CharField(
+        "Синій",
+        max_length=7,
+        default="#002fa7",
+        validators=[RegexValidator(r"^#[0-9A-Fa-f]{6}$")],
+    )
+    color_ink = models.CharField(
+        "Темний",
+        max_length=7,
+        default="#141824",
+        validators=[RegexValidator(r"^#[0-9A-Fa-f]{6}$")],
+    )
+    color_bg = models.CharField(
+        "Білий",
+        max_length=7,
+        default="#ffffff",
+        validators=[RegexValidator(r"^#[0-9A-Fa-f]{6}$")],
+    )
+    color_wash = models.CharField(
+        "Теплий світлий",
+        max_length=7,
+        default="#f7f6f3",
+        validators=[RegexValidator(r"^#[0-9A-Fa-f]{6}$")],
+    )
+    font_display = models.CharField(
+        "Шрифт заголовків",
+        max_length=32,
+        choices=FONT_CHOICES,
+        default=DEFAULT_DISPLAY,
+    )
+    font_body = models.CharField(
+        "Шрифт тексту",
+        max_length=32,
+        choices=FONT_CHOICES,
+        default=DEFAULT_BODY,
+    )
 
     class Meta:
         verbose_name = "Футер"
@@ -201,6 +253,32 @@ class SiteSettings(models.Model):
 
     def __str__(self) -> str:
         return self.site_name
+
+    @property
+    def theme_css(self):
+        from src.core.palette import build_theme_css
+
+        return mark_safe(
+            build_theme_css(
+                self.color_red,
+                self.color_blue,
+                self.color_ink,
+                self.color_bg,
+                self.color_wash,
+                font_display=font_stack(self.font_display, DEFAULT_DISPLAY),
+                font_body=font_stack(self.font_body, DEFAULT_BODY),
+            )
+        )
+
+    @property
+    def google_fonts_href(self) -> str:
+        return build_google_fonts_href(self.font_display, self.font_body)
+
+    @property
+    def theme_ink(self) -> str:
+        from src.core.palette import DEFAULT_INK, normalize_hex
+
+        return normalize_hex(self.color_ink, DEFAULT_INK)
 
     @classmethod
     def load(cls) -> "SiteSettings":

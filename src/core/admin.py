@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 
 from src.core.admin_auth import GuardedGroupAdmin, GuardedUserAdmin  # noqa: F401
@@ -9,12 +10,44 @@ from src.core.models import SiteSettings
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(TinyMceBodyMixin, SingletonAdmin):
     tinymce_fields = ("footer_blurb",)
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        if db_field.name.startswith("color_"):
+            kwargs["widget"] = forms.TextInput(attrs={"type": "color"})
+        return super().formfield_for_dbfield(db_field, request, **kwargs)
+
     fieldsets = (
         (
             "Бренд",
             {
                 "fields": ("site_name", "tagline", "legal_name", "edrpou"),
                 "description": "Контакти, бренд і текст футера. Пункти меню не змінюються.",
+            },
+        ),
+        (
+            "Кольори",
+            {
+                "fields": (
+                    "color_red",
+                    "color_blue",
+                    "color_ink",
+                    "color_bg",
+                    "color_wash",
+                ),
+                "description": (
+                    "П’ять основних кольорів. Темніший червоний для наведення, "
+                    "сірий текст, лінії, колір кнопок і фон героя рахуються від них самі."
+                ),
+            },
+        ),
+        (
+            "Шрифти",
+            {
+                "fields": ("font_display", "font_body"),
+                "description": (
+                    "Десять шрифтів з українською і накресленнями 400–700. "
+                    "Заголовки й текст обираються окремо."
+                ),
             },
         ),
         (

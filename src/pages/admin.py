@@ -3,8 +3,16 @@ from unfold.admin import StackedInline
 
 from src.core.admin_mixins import TinyMceBodyMixin
 from src.core.admin_singleton import SingletonAdmin
-from src.pages.models import AboutPage, Certificate, HomePage
+from src.pages.models import AboutPage, Certificate, HeroSlide, HomePage
 from src.team.admin import CaseInline, TeamMemberInline
+
+
+class HeroSlideInline(StackedInline):
+    model = HeroSlide
+    extra = 4
+    can_delete = True
+    fields = ("image", "sort_order", "is_active")
+    ordering = ("sort_order", "id")
 
 
 class CertificateInline(StackedInline):
@@ -17,13 +25,28 @@ class CertificateInline(StackedInline):
 @admin.register(HomePage)
 class HomePageAdmin(TinyMceBodyMixin, SingletonAdmin):
     tinymce_fields = ("hero_title", "hero_lead")
+    inlines = (HeroSlideInline,)
     fieldsets = (
         (
             "Банер",
             {
-                "fields": ("hero_title", "hero_lead"),
-                "description": "Перший екран головної.",
+                "fields": (
+                    "hero_mode",
+                    "hero_image",
+                    "hero_video",
+                    "hero_poster",
+                ),
+                "description": (
+                    "Режим «Слайдер» бере фото з блоку «Фото слайдера» одразу нижче. "
+                    "Там два порожні поля і кнопка «Додати ще…» для третього і наступних. "
+                    "На сайті слайдер вмикається від двох фото. "
+                    "Відео — MP4 без звуку; на проді файл до 20 МБ."
+                ),
             },
+        ),
+        (
+            "Текст банера",
+            {"fields": ("hero_title", "hero_lead")},
         ),
         (
             "Напрями",
@@ -68,7 +91,7 @@ class AboutPageAdmin(TinyMceBodyMixin, SingletonAdmin):
             "Вступ",
             {
                 "fields": ("lead",),
-                "description": "Команда, кейси і сертифікати — таблиці внизу форми.",
+                "description": "Команда, кейси і сертифікати — блоки нижче. Фото команди завантажується файлом.",
             },
         ),
         ("Хто ми", {"fields": ("story",)}),

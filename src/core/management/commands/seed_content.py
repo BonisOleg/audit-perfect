@@ -11,6 +11,7 @@ from src.services.models import Service
 from src.team.models import Case, TeamMember
 
 CERTS_DIR = Path(__file__).resolve().parents[2] / "static" / "images" / "certs"
+TEAM_DIR = Path(__file__).resolve().parents[2] / "static" / "images" / "team"
 CERTS = (
     ("Свідоцтво про державну реєстрацію", "registration.webp", 1),
     ("Диплом ACCA (DipIFR)", "acca.webp", 2),
@@ -339,15 +340,18 @@ class Command(BaseCommand):
         self.stdout.write(f"Services: {Service.objects.count()}")
 
         for name, role, photo, order in TEAM:
-            TeamMember.objects.update_or_create(
+            member, _ = TeamMember.objects.update_or_create(
                 name=name,
                 defaults={
                     "role": role,
-                    "photo": photo,
                     "sort_order": order,
                     "is_active": True,
                 },
             )
+            src = TEAM_DIR / Path(photo).name
+            if src.is_file() and not member.photo:
+                with src.open("rb") as handle:
+                    member.photo.save(src.name, File(handle), save=True)
         self.stdout.write(f"Team: {TeamMember.objects.count()}")
 
         for title, industry, result, order in CASES:

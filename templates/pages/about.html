@@ -103,7 +103,7 @@
       <article class="about-team__person reveal">
         <div class="about-team__photo">
           {% if person.photo %}
-          <img src="{% static person.photo %}" alt="{{ person.name }}" width="800" height="1000" loading="lazy"
+          <img src="{{ person.photo.url }}" alt="{{ person.name }}" width="800" height="1000" loading="lazy"
             decoding="async">
           {% endif %}
         </div>

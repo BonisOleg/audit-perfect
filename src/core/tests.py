@@ -30,6 +30,99 @@ class AdminFunctionalTests(TestCase):
         self.assertContains(response, "x-model")
 
 
+class ThemeColorTests(TestCase):
+    def test_derived_colors_follow_the_five_bases(self):
+        from src.core.palette import build_theme_css
+
+        css = build_theme_css("#ec423c", "#002fa7", "#141824", "#ffffff", "#f7f6f3")
+        self.assertIn("--red:#ec423c;", css)
+        self.assertIn("--blue:#002fa7;", css)
+        self.assertIn("--ink:#141824;", css)
+        self.assertIn("--bg:#ffffff;", css)
+        self.assertIn("--wash:#f7f6f3;", css)
+        self.assertIn("--btn:#141824;", css)
+        self.assertIn("--on-btn:#ffffff;", css)
+        self.assertIn("--red-deep:#c63732;", css)
+        self.assertIn("--hero:#0b0d14;", css)
+        self.assertNotIn("<", css)
+
+    def test_home_uses_saved_palette(self):
+        site = SiteSettings.load()
+        site.color_red = "#112233"
+        site.save()
+        response = self.client.get("/")
+        self.assertContains(response, "--red:#112233;")
+        policy = response.headers["Content-Security-Policy"]
+        nonce = policy.split("'nonce-", 1)[1].split("'", 1)[0]
+        self.assertTrue(nonce)
+        self.assertContains(response, f'nonce="{nonce}"')
+
+    def test_admin_color_fields_are_pickers(self):
+        User.objects.create_superuser("admin", "admin@localhost", "admin12345")
+        self.client.login(username="admin", password="admin12345")
+        SiteSettings.load()
+        response = self.client.get("/admin/core/sitesettings/1/change/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'type="color"', count=5)
+
+
+class ThemeFontTests(TestCase):
+    def test_unknown_slug_falls_back_to_defaults(self):
+        from src.core.fonts import font_stack, google_fonts_href
+
+        self.assertEqual(
+            font_stack("comic-sans", "onest"),
+            '"Onest","Helvetica Neue",sans-serif',
+        )
+        href = google_fonts_href("nope", "also-nope")
+        self.assertIn("family=Onest:wght@400;500;600;700", href)
+        self.assertIn("family=Manrope:wght@400;500;600;700", href)
+        self.assertNotIn("family=Inter", href)
+
+    def test_same_family_is_requested_once(self):
+        from src.core.fonts import google_fonts_href
+
+        href = google_fonts_href("inter", "inter")
+        self.assertEqual(href.count("family="), 1)
+        self.assertIn("family=Inter:wght@400;500;600;700", href)
+        spaced = google_fonts_href("source-sans-3", "manrope")
+        self.assertIn("family=Source+Sans+3:wght@400;500;600;700", spaced)
+
+    def test_home_uses_selected_fonts(self):
+        site = SiteSettings.load()
+        site.font_display = "inter"
+        site.font_body = "source-sans-3"
+        site.save()
+        response = self.client.get("/")
+        self.assertContains(response, '--ff-display:"Inter","Helvetica Neue",sans-serif;')
+        self.assertContains(response, '--ff-body:"Source Sans 3","Helvetica Neue",sans-serif;')
+        self.assertContains(
+            response,
+            "family=Inter:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;500;600;700",
+        )
+        self.assertNotContains(response, "family=Onest:")
+
+    def test_admin_lists_ten_fonts(self):
+        User.objects.create_superuser("admin", "admin@localhost", "admin12345")
+        self.client.login(username="admin", password="admin12345")
+        SiteSettings.load()
+        response = self.client.get("/admin/core/sitesettings/1/change/")
+        self.assertEqual(response.status_code, 200)
+        for label in (
+            "Onest",
+            "Manrope",
+            "Inter",
+            "Source Sans 3",
+            "IBM Plex Sans",
+            "Nunito Sans",
+            "Noto Sans",
+            "Rubik",
+            "Fira Sans",
+            "Wix Madefor Text",
+        ):
+            self.assertContains(response, f">{label}<")
+
+
 class SiteSettingsMetaTests(TestCase):
     def test_meta_for_uses_page_then_default(self):
         site = SiteSettings.load()

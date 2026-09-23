@@ -13,18 +13,49 @@
 {% endblock %}
 
 {% block content %}
-<section class="hero-cine" aria-labelledby="hero-title">
+<section class="hero-cine" data-hero-kind="{{ hero.kind }}" aria-labelledby="hero-title">
   <div class="hero-cine__shell">
     <div class="hero-cine__media" aria-hidden="true">
+      {% if hero.kind == "video" %}
+      <video
+        class="hero-cine__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        disablepictureinpicture
+        data-hero-video
+        {% if hero.poster %}poster="{{ hero.poster }}"{% endif %}
+      >
+        <source src="{{ hero.video }}" type="video/mp4">
+      </video>
+      {% elif hero.kind == "slider" %}
+      <div class="hero-cine__slides">
+        {% for src in hero.slides %}
+        <img
+          class="hero-cine__img{% if forloop.first %} is-active{% endif %}"
+          src="{{ src }}"
+          alt=""
+          width="2000"
+          height="1333"
+          {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+          decoding="async"
+          data-hero-slide
+        >
+        {% endfor %}
+      </div>
+      {% else %}
       <img
         class="hero-cine__img"
-        src="{% static 'images/hero.webp' %}"
+        src="{% if hero.image %}{{ hero.image }}{% else %}{% static 'images/hero.webp' %}{% endif %}"
         alt=""
         width="2000"
         height="1333"
         fetchpriority="high"
         decoding="async"
       >
+      {% endif %}
       <div class="hero-cine__overlay"></div>
     </div>
     <div class="hero-cine__content">
@@ -118,4 +149,8 @@
 </section>
 
 {% include "partials/consult.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/hero.js' %}?v={{ static_version }}" defer></script>
 {% endblock %}

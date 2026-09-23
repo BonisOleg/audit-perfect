@@ -1,4 +1,6 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.db.models.signals import post_delete, pre_save
 
 
 class TeamMember(models.Model):
@@ -10,11 +12,11 @@ class TeamMember(models.Model):
     )
     name = models.CharField("Імʼя", max_length=120)
     role = models.TextField("Посада / опис")
-    photo = models.CharField(
-        "Шлях static (images/...)",
-        max_length=255,
+    photo = models.ImageField(
+        "Фото",
+        upload_to="team/",
         blank=True,
-        help_text="Наприклад images/team/yesieva.webp",
+        validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp"])],
     )
     sort_order = models.PositiveIntegerField("Порядок", default=0)
     is_active = models.BooleanField("Активний", default=True)
@@ -48,3 +50,31 @@ class Case(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+def _drop_replaced_team_photo(sender, instance, **kwargs):
+    if not instance.pk:
+        return
+    previous = sender.objects.filter(pk=instance.pk).only("photo").first()
+    if previous is None or not previous.photo:
+        return
+    new_name = instance.photo.name if instance.photo else ""
+    if previous.photo.name != new_name:
+        previous.photo.delete(save=False)
+
+
+def _drop_team_photo_file(sender, instance, **kwargs):
+    if instance.photo:
+        instance.photo.delete(save=False)
+
+
+pre_save.connect(
+    _drop_replaced_team_photo,
+    sender=TeamMember,
+    dispatch_uid="team.member.photo.replace",
+)
+post_delete.connect(
+    _drop_team_photo_file,
+    sender=TeamMember,
+    dispatch_uid="team.member.photo.delete",
+)

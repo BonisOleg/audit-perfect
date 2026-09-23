@@ -12,14 +12,15 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ site_url }}{{ request.path }}">
   <meta property="og:locale" content="uk_UA">
-  <meta name="theme-color" content="#141824">
+  <meta name="theme-color" content="{{ site.theme_ink }}">
   <link rel="icon" href="{% static 'images/favicon.svg' %}?v={{ static_version }}" type="image/svg+xml">
   <link rel="icon" href="{% static 'images/favicon.ico' %}?v={{ static_version }}" sizes="any">
   <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}?v={{ static_version }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{{ site.google_fonts_href }}" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <style nonce="{{ CSP_NONCE }}">{{ site.theme_css }}</style>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/header.css' %}?v={{ static_version }}">
   <link rel="stylesheet" href="{% static 'css/footer.css' %}">

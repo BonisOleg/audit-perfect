@@ -3,7 +3,7 @@
   --cine-soft: rgb(255 255 255 / 0.82);
   --cine-muted: rgb(255 255 255 / 0.72);
   margin-top: calc((var(--header-h) + var(--safe-top)) * -1);
-  background: #0b0d12;
+  background: var(--hero);
 }
 
 .hero-cine__shell {
@@ -15,6 +15,7 @@
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
+  touch-action: pan-y;
 }
 
 .hero-cine__media,
@@ -25,13 +26,35 @@
   height: 100%;
 }
 
-.hero-cine__img {
+.hero-cine__img,
+.hero-cine__video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   max-width: none;
+  background: var(--hero);
+}
+
+.hero-cine__video {
+  pointer-events: none;
+}
+
+.hero-cine__slides {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-cine__slides .hero-cine__img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--t-hero) var(--ease-out);
+}
+
+.hero-cine__slides .hero-cine__img.is-active {
+  opacity: 1;
 }
 
 .hero-cine__overlay {
@@ -278,4 +301,5 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-cine__scroll { animation: none; }
   .hero-cine__btn { transition: none; }
+  .hero-cine__slides .hero-cine__img { transition: none; }
 }

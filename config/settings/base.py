@@ -169,7 +169,7 @@ CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": [SELF],
         "script-src": [SELF, NONCE, "https://www.googletagmanager.com"],
-        "style-src": [SELF, "https://fonts.googleapis.com"],
+        "style-src": [SELF, NONCE, "https://fonts.googleapis.com"],
         "font-src": [SELF, "https://fonts.gstatic.com", "data:"],
         "img-src": [SELF, "data:", "https:"],
         "connect-src": [

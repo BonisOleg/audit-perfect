@@ -17,6 +17,7 @@ class HomeView(TemplateView):
         ctx = super().get_context_data(**kwargs)
         page = HomePage.load()
         ctx["page"] = page
+        ctx["hero"] = page.hero_media()
         ctx["why_items"] = page.why_items
         ctx["services"] = Service.objects.filter(is_active=True).order_by("sort_order")
         ctx["latest_news"] = News.objects.filter(is_published=True)[:3]

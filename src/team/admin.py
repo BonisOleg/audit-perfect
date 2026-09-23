@@ -1,11 +1,12 @@
-from unfold.admin import TabularInline
+from unfold.admin import StackedInline, TabularInline
 
 from src.team.models import Case, TeamMember
 
 
-class TeamMemberInline(TabularInline):
+class TeamMemberInline(StackedInline):
     model = TeamMember
-    extra = 0
+    extra = 1
+    can_delete = True
     fields = ("name", "role", "photo", "sort_order", "is_active")
     ordering = ("sort_order", "name")
 

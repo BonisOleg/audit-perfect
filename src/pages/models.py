@@ -1,5 +1,6 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.db.models.signals import post_delete, pre_save
 from django.utils.safestring import SafeString
 
 from src.core.richtext import render_cms_inline, render_cms_text
@@ -22,7 +23,41 @@ class SingletonMixin(models.Model):
         return obj
 
 
+_IMAGE_EXTS = ["jpg", "jpeg", "png", "webp"]
+
+
 class HomePage(SingletonMixin):
+    class HeroMode(models.TextChoices):
+        IMAGE = "image", "Одне зображення"
+        SLIDER = "slider", "Слайдер"
+        VIDEO = "video", "Відео"
+
+    hero_mode = models.CharField(
+        "Режим банера",
+        max_length=16,
+        choices=HeroMode.choices,
+        default=HeroMode.IMAGE,
+    )
+    hero_image = models.ImageField(
+        "Зображення банера",
+        upload_to="hero/",
+        blank=True,
+        validators=[FileExtensionValidator(_IMAGE_EXTS)],
+    )
+    hero_video = models.FileField(
+        "Відео банера",
+        upload_to="hero/video/",
+        blank=True,
+        validators=[FileExtensionValidator(["mp4"])],
+        help_text="MP4 без звуку, короткий цикл. На проді nginx приймає файл до 20 МБ.",
+    )
+    hero_poster = models.ImageField(
+        "Кадр до старту відео",
+        upload_to="hero/poster/",
+        blank=True,
+        validators=[FileExtensionValidator(_IMAGE_EXTS)],
+        help_text="Показується, поки відео вантажиться, і якщо в системі увімкнено «зменшити рух».",
+    )
     hero_title = models.TextField(
         "Слоган",
         default=(
@@ -120,6 +155,49 @@ class HomePage(SingletonMixin):
                 items.append({"title": title, "body": body})
         return items
 
+    def hero_media(self) -> dict:
+        slides = [
+            slide.image.url
+            for slide in self.hero_slides.filter(is_active=True).order_by("sort_order", "id")
+            if slide.image
+        ]
+        image = self.hero_image.url if self.hero_image else ""
+        poster = self.hero_poster.url if self.hero_poster else ""
+        video = self.hero_video.url if self.hero_video else ""
+        if self.hero_mode == self.HeroMode.VIDEO and video:
+            return {"kind": "video", "video": video, "poster": poster or image}
+        if self.hero_mode == self.HeroMode.SLIDER and len(slides) >= 2:
+            return {"kind": "slider", "slides": slides}
+        if self.hero_mode == self.HeroMode.SLIDER and len(slides) == 1:
+            image = slides[0]
+        elif self.hero_mode == self.HeroMode.VIDEO:
+            image = poster or image
+        return {"kind": "image", "image": image}
+
+
+class HeroSlide(models.Model):
+    home = models.ForeignKey(
+        HomePage,
+        on_delete=models.CASCADE,
+        related_name="hero_slides",
+        default=1,
+    )
+    image = models.ImageField(
+        "Зображення",
+        upload_to="hero/slides/",
+        validators=[FileExtensionValidator(_IMAGE_EXTS)],
+    )
+    sort_order = models.PositiveIntegerField("Порядок", default=0)
+    is_active = models.BooleanField("Показувати", default=True)
+
+    class Meta:
+        verbose_name = "фото слайдера"
+        verbose_name_plural = "Фото слайдера"
+        ordering = ["sort_order", "id"]
+
+    def __str__(self) -> str:
+        return f"Слайд {self.sort_order}"
+
 
 class AboutPage(SingletonMixin):
     lead = models.TextField(
@@ -215,3 +293,57 @@ class Certificate(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+def _stored_name(field_file) -> str:
+    if not field_file:
+        return ""
+    return field_file.name or ""
+
+
+def _drop_replaced_file(old_file, new_file) -> None:
+    old_name = _stored_name(old_file)
+    new_name = _stored_name(new_file)
+    if old_name and old_name != new_name:
+        old_file.delete(save=False)
+
+
+def _drop_replaced_homepage_files(sender, instance, **kwargs):
+    if not instance.pk:
+        return
+    previous = sender.objects.filter(pk=instance.pk).first()
+    if previous is None:
+        return
+    for field_name in ("hero_image", "hero_video", "hero_poster"):
+        _drop_replaced_file(getattr(previous, field_name), getattr(instance, field_name))
+
+
+def _drop_replaced_hero_slide(sender, instance, **kwargs):
+    if not instance.pk:
+        return
+    previous = sender.objects.filter(pk=instance.pk).only("image").first()
+    if previous is None:
+        return
+    _drop_replaced_file(previous.image, instance.image)
+
+
+def _drop_hero_slide_file(sender, instance, **kwargs):
+    if instance.image:
+        instance.image.delete(save=False)
+
+
+pre_save.connect(
+    _drop_replaced_homepage_files,
+    sender=HomePage,
+    dispatch_uid="pages.home.hero.files",
+)
+pre_save.connect(
+    _drop_replaced_hero_slide,
+    sender=HeroSlide,
+    dispatch_uid="pages.hero.slide.replace",
+)
+post_delete.connect(
+    _drop_hero_slide_file,
+    sender=HeroSlide,
+    dispatch_uid="pages.hero.slide.delete",
+)
