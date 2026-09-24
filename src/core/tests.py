@@ -6,6 +6,62 @@ from src.core.richtext import render_cms_inline, render_cms_text
 from src.services.admin import _lines_to_composition
 
 
+class UploadedImageWebpTests(TestCase):
+    def test_png_upload_is_stored_as_webp(self):
+        import io
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from django.test import override_settings
+        from PIL import Image
+
+        from src.pages.models import HomePage
+
+        buffer = io.BytesIO()
+        Image.new("RGB", (2, 2), (200, 10, 10)).save(buffer, format="PNG")
+        png = buffer.getvalue()
+        page = HomePage.load()
+        with TemporaryDirectory() as tmp:
+            with override_settings(MEDIA_ROOT=Path(tmp)):
+                page.hero_image = SimpleUploadedFile("banner.png", png, content_type="image/png")
+                page.save()
+                stored = page.hero_image.name
+                payload = page.hero_image.read()
+                page.hero_title = page.hero_title
+                page.save()
+                page.refresh_from_db()
+        self.assertTrue(stored.endswith(".webp"))
+        self.assertTrue(payload.startswith(b"RIFF"))
+        self.assertIn(b"WEBP", payload[:16])
+        self.assertEqual(page.hero_image.name, stored)
+
+    def test_webp_upload_is_kept(self):
+        import io
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from django.test import override_settings
+        from PIL import Image
+
+        from src.pages.models import HomePage
+
+        buffer = io.BytesIO()
+        Image.new("RGB", (2, 2), (10, 20, 30)).save(buffer, format="WEBP", quality=80)
+        original = buffer.getvalue()
+        page = HomePage.load()
+        with TemporaryDirectory() as tmp:
+            with override_settings(MEDIA_ROOT=Path(tmp)):
+                page.hero_image = SimpleUploadedFile(
+                    "banner.webp", original, content_type="image/webp"
+                )
+                page.save()
+                payload = page.hero_image.read()
+        self.assertTrue(page.hero_image.name.endswith("banner.webp"))
+        self.assertEqual(payload, original)
+
+
 class HealthzTests(TestCase):
     def test_healthz(self):
         response = self.client.get("/healthz/")
