@@ -1,3 +1,4 @@
+{% load i18n %}
 <section class="consult" id="konsultacia">
   <div class="container consult__split">
     <header class="consult__copy reveal">
@@ -5,8 +6,8 @@
       <h2 class="consult__title">{{ site.consult_title }}</h2>
     </header>
     <div class="consult__actions reveal reveal--delay">
-      <a class="consult__btn consult__btn--call" href="tel:{{ site.phone_href }}">Зателефонувати</a>
-      <a class="consult__btn consult__btn--mail" href="mailto:{{ site.email }}">Написати листа</a>
+      <a class="consult__btn consult__btn--call" href="tel:{{ site.phone_href }}">{% trans "Зателефонувати" %}</a>
+      <a class="consult__btn consult__btn--mail" href="mailto:{{ site.email }}">{% trans "Написати листа" %}</a>
     </div>
   </div>
 </section>

@@ -3,6 +3,7 @@ from tempfile import TemporaryDirectory
 
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
+from django.utils import translation
 
 from src.services.models import Service
 
@@ -11,15 +12,18 @@ class SmokeTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         Service.objects.create(
-            title="Військовий облік",
+            title_uk="Військовий облік",
+            title_en="Military registration",
             slug="viyskovyy-oblik",
-            short_description="test",
+            short_description_uk="test",
+            short_description_en="test",
             sort_order=1,
             is_active=True,
-            composition=[{"title": "A", "text": "B"}],
+            composition_uk=[{"title": "A", "text": "B"}],
         )
 
     def setUp(self):
+        translation.activate("uk")
         self.client = Client()
 
     def test_home(self):
@@ -131,7 +135,7 @@ class SmokeTests(TestCase):
             with override_settings(MEDIA_ROOT=Path(tmp)):
                 Certificate.objects.create(
                     about=page,
-                    title="Диплом ACCA (DipIFR)",
+                    title_uk="Диплом ACCA (DipIFR)",
                     image=SimpleUploadedFile("acca.png", png, content_type="image/png"),
                     sort_order=1,
                     is_active=True,
@@ -158,16 +162,16 @@ class SmokeTests(TestCase):
             with override_settings(MEDIA_ROOT=Path(tmp)):
                 TeamMember.objects.create(
                     about=page,
-                    name="Наталія Єсієва",
-                    role="Директор",
+                    name_uk="Наталія Єсієва",
+                    role_uk="Директор",
                     photo=SimpleUploadedFile("yesieva.png", png, content_type="image/png"),
                     sort_order=1,
                     is_active=True,
                 )
                 TeamMember.objects.create(
                     about=page,
-                    name="Прихована",
-                    role="Не на сайті",
+                    name_uk="Прихована",
+                    role_uk="Не на сайті",
                     sort_order=2,
                     is_active=False,
                 )

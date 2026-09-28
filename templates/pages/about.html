@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load i18n static %}
 
 {% block data_page %}about{% endblock %}
 
@@ -15,13 +15,13 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "{{ site.site_name }}",
-  "url": "{{ site_url }}/",
+  "url": "{{ site_url }}{% url 'home' %}",
   "email": "{{ site.email }}",
   "telephone": "{{ site.phone }}",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "{{ site.address }}",
-    "addressLocality": "Київ",
+    "addressLocality": "{% trans 'Київ' %}",
     "addressCountry": "UA"
   }
 }
@@ -31,11 +31,11 @@
 {% block content %}
 <header class="about-intro">
   <div class="container">
-    <p class="crumbs"><a href="{% url 'home' %}">Головна</a> · Про нас</p>
+    <p class="crumbs"><a href="{% url 'home' %}">{% trans "Головна" %}</a> · {% trans "Про нас" %}</p>
     <div class="about-intro__split">
       <div class="about-intro__copy reveal">
-        <p class="section-kicker">Про нас</p>
-        <h1 class="about-title">Про <em>компанію</em></h1>
+        <p class="section-kicker">{% trans "Про нас" %}</p>
+        <h1 class="about-title">{% trans "Про" %} <em>{% trans "компанію" %}</em></h1>
       </div>
       <div class="about-intro__lead reveal reveal--delay">{{ page.lead_html }}</div>
     </div>
@@ -45,9 +45,9 @@
 <section class="about-story" id="istoriya">
   <div class="container about-story__split">
     <header class="about-story__intro reveal">
-      <p class="section-kicker">Історія</p>
-      <h2 class="about-title about-title--on-ink">Хто <em>ми</em></h2>
-      <p class="about-lead about-lead--on-ink">Від аудиторської фірми до комплексного партнера для бізнесу.</p>
+      <p class="section-kicker">{% trans "Історія" %}</p>
+      <h2 class="about-title about-title--on-ink">{% trans "Хто" %} <em>{% trans "ми" %}</em></h2>
+      <p class="about-lead about-lead--on-ink">{% trans "Від аудиторської фірми до комплексного партнера для бізнесу." %}</p>
     </header>
     <div class="about-story__prose reveal reveal--delay">
       {{ page.story_html }}
@@ -58,8 +58,8 @@
 <section class="about-stats" id="cyfry">
   <div class="container about-stats__split">
     <header class="about-stats__intro reveal">
-      <p class="section-kicker">Масштаб</p>
-      <h2 class="about-title">Цифри <em>на ринку</em></h2>
+      <p class="section-kicker">{% trans "Масштаб" %}</p>
+      <h2 class="about-title">{% trans "Цифри" %} <em>{% trans "на ринку" %}</em></h2>
     </header>
     <div class="about-stats__grid">
       {% if stat_items %}
@@ -72,19 +72,19 @@
       {% else %}
       <article class="about-stats__item reveal">
         <p class="about-stats__num">19</p>
-        <p class="about-stats__cap">років на ринку</p>
+        <p class="about-stats__cap">{% trans "років на ринку" %}</p>
       </article>
       <article class="about-stats__item reveal">
         <p class="about-stats__num">500</p>
-        <p class="about-stats__cap">постійних клієнтів</p>
+        <p class="about-stats__cap">{% trans "постійних клієнтів" %}</p>
       </article>
       <article class="about-stats__item reveal">
         <p class="about-stats__num">25</p>
-        <p class="about-stats__cap">успішних проєктів зі статусом критичності</p>
+        <p class="about-stats__cap">{% trans "успішних проєктів зі статусом критичності" %}</p>
       </article>
       <article class="about-stats__item reveal">
         <p class="about-stats__num">50</p>
-        <p class="about-stats__cap">супроводжених аудитів</p>
+        <p class="about-stats__cap">{% trans "супроводжених аудитів" %}</p>
       </article>
       {% endif %}
     </div>
@@ -94,9 +94,9 @@
 <section class="about-team" id="komanda">
   <div class="container">
     <header class="about-team__intro reveal">
-      <p class="section-kicker">Команда</p>
-      <h2 class="about-title about-title--on-ink">Партнери <em>справи</em></h2>
-      <p class="about-lead about-lead--on-ink">Ключові спеціалісти фірми.</p>
+      <p class="section-kicker">{% trans "Команда" %}</p>
+      <h2 class="about-title about-title--on-ink">{% trans "Партнери" %} <em>{% trans "справи" %}</em></h2>
+      <p class="about-lead about-lead--on-ink">{% trans "Ключові спеціалісти фірми." %}</p>
     </header>
     <div class="about-team__grid">
       {% for person in team %}
@@ -126,10 +126,10 @@
       <article class="about-certs__item about-certs__item--link reveal">
         <div class="about-certs__frame about-certs__frame--text">
           <p class="about-certs__code">№ {{ site.registry_number }}</p>
-          <p>Реєстр аудиторів та субʼєктів аудиторської діяльності</p>
-          <a href="{{ site.registry_url }}" rel="noopener noreferrer" target="_blank">Переглянути в Реєстрі</a>
+          <p>{% trans "Реєстр аудиторів та субʼєктів аудиторської діяльності" %}</p>
+          <a href="{{ site.registry_url }}" rel="noopener noreferrer" target="_blank">{% trans "Переглянути в Реєстрі" %}</a>
         </div>
-        <p class="about-certs__cap">Реєстровий номер</p>
+        <p class="about-certs__cap">{% trans "Реєстровий номер" %}</p>
       </article>
       {% for cert in certificates %}
       <figure class="about-certs__item reveal">
@@ -138,7 +138,7 @@
           class="about-certs__frame about-certs__frame--zoom"
           data-certs-open="{{ forloop.counter0 }}"
           aria-haspopup="dialog"
-          aria-label="Збільшити: {{ cert.title }}"
+          aria-label="{% blocktrans with title=cert.title %}Збільшити: {{ title }}{% endblocktrans %}"
         >
           <img
             src="{{ cert.image.url }}"
@@ -157,12 +157,12 @@
 </section>
 
 {% if certificates %}
-<dialog class="certs-lb" data-certs-lb aria-label="Перегляд сертифікатів">
-  <button type="button" class="certs-lb__backdrop" data-certs-close aria-label="Закрити"></button>
+<dialog class="certs-lb" data-certs-lb aria-label="{% trans 'Перегляд сертифікатів' %}">
+  <button type="button" class="certs-lb__backdrop" data-certs-close aria-label="{% trans 'Закрити' %}"></button>
   <div class="certs-lb__shell">
-    <button type="button" class="certs-lb__close" data-certs-close aria-label="Закрити">×</button>
-    <button type="button" class="certs-lb__nav certs-lb__nav--prev" data-certs-prev aria-label="Попередній">‹</button>
-    <button type="button" class="certs-lb__nav certs-lb__nav--next" data-certs-next aria-label="Наступний">›</button>
+    <button type="button" class="certs-lb__close" data-certs-close aria-label="{% trans 'Закрити' %}">×</button>
+    <button type="button" class="certs-lb__nav certs-lb__nav--prev" data-certs-prev aria-label="{% trans 'Попередній' %}">‹</button>
+    <button type="button" class="certs-lb__nav certs-lb__nav--next" data-certs-next aria-label="{% trans 'Наступний' %}">›</button>
     <div class="certs-lb__viewport" data-certs-viewport>
       <ul class="certs-lb__track" data-certs-track>
         {% for cert in certificates %}
@@ -179,10 +179,10 @@
       </ul>
     </div>
     <p class="certs-lb__cap" data-certs-cap></p>
-    <ul class="certs-lb__dots" aria-label="Слайди">
+    <ul class="certs-lb__dots" aria-label="{% trans 'Слайди' %}">
       {% for cert in certificates %}
       <li>
-        <button type="button" class="certs-lb__dot" data-certs-dot="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter }}"></button>
+        <button type="button" class="certs-lb__dot" data-certs-dot="{{ forloop.counter0 }}" aria-label="{% blocktrans with n=forloop.counter %}Слайд {{ n }}{% endblocktrans %}"></button>
       </li>
       {% endfor %}
     </ul>
@@ -193,8 +193,8 @@
 <section class="about-cases" id="kejsy">
   <div class="container about-cases__split">
     <header class="about-cases__intro reveal">
-      <p class="section-kicker">Роботи</p>
-      <h2 class="about-title about-title--on-ink">Кейси</h2>
+      <p class="section-kicker">{% trans "Роботи" %}</p>
+      <h2 class="about-title about-title--on-ink">{% trans "Кейси" %}</h2>
     </header>
     <div class="about-cases__list">
       {% for case in cases %}

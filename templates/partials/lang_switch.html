@@ -1,0 +1,21 @@
+{% load i18n %}
+{% if current_language != "uk" or en_enabled %}
+<div class="lang-switch" role="navigation" aria-label="{% trans 'Мова' %}">
+  {% if current_language != "uk" %}
+  <form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ lang_switch_urls.uk }}">
+    <input type="hidden" name="language" value="uk">
+    <button type="submit">UA</button>
+  </form>
+  {% endif %}
+  {% if en_enabled and current_language != "en" %}
+  <form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ lang_switch_urls.en }}">
+    <input type="hidden" name="language" value="en">
+    <button type="submit">EN</button>
+  </form>
+  {% endif %}
+</div>
+{% endif %}

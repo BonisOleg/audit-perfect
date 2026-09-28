@@ -28,7 +28,7 @@ class UploadedImageWebpTests(TestCase):
                 page.save()
                 stored = page.hero_image.name
                 payload = page.hero_image.read()
-                page.hero_title = page.hero_title
+                page.hero_title_uk = page.hero_title_uk
                 page.save()
                 page.refresh_from_db()
         self.assertTrue(stored.endswith(".webp"))
@@ -84,6 +84,24 @@ class AdminFunctionalTests(TestCase):
         response = self.client.get("/admin/auth/user/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "x-model")
+
+    def test_success_message_is_marked_to_autohide(self):
+        from django.contrib.messages.storage.base import Message
+        from django.template.loader import render_to_string
+
+        html = render_to_string(
+            "unfold/helpers/messages.html",
+            {
+                "messages": [
+                    Message(25, "Збережено"),
+                    Message(40, "Помилка"),
+                ]
+            },
+        )
+        self.assertEqual(html.count("<li data-autohide>"), 1)
+        self.assertIn("5000", html)
+        self.assertEqual(html.count('type="button" data-dismiss-message'), 1)
+        self.assertIn("Закрити", html)
 
 
 class ThemeColorTests(TestCase):
@@ -181,9 +199,12 @@ class ThemeFontTests(TestCase):
 
 class SiteSettingsMetaTests(TestCase):
     def test_meta_for_uses_page_then_default(self):
+        from django.utils import translation
+
+        translation.activate("uk")
         site = SiteSettings.load()
-        site.home_meta_title = "Головна кастом"
-        site.home_meta_description = ""
+        site.home_meta_title_uk = "Головна кастом"
+        site.home_meta_description_uk = ""
         site.save()
         title, description = site.meta_for("home")
         self.assertEqual(title, "Головна кастом")

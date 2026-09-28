@@ -1,0 +1,349 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-28 15:59+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+msgid "Українська"
+msgstr "Ukrainian"
+
+msgid "English"
+msgstr "English"
+
+msgid "Сторінку не знайдено — Аудит-Перфект"
+msgstr "Page not found — AUDYT-PERFECT"
+
+msgid "Запитану сторінку не знайдено."
+msgstr "The requested page was not found."
+
+msgid "Перейти до контенту"
+msgstr "Skip to content"
+
+msgid "Головна"
+msgstr "Home"
+
+msgid "Новини"
+msgstr "News"
+
+msgid "Текст статті"
+msgstr "Article"
+
+msgid "Поділитися статтею"
+msgstr "Share this article"
+
+msgid "Скопійовано"
+msgstr "Copied"
+
+msgid "Скопіювати посилання"
+msgstr "Copy link"
+
+msgid "Інші новини"
+msgstr "Other news"
+
+msgid ""
+"Зміни вимог, перевірки, обовʼязковий аудит — коротко для власників і "
+"фінансистів."
+msgstr "Changes in requirements, reviews and statutory audit — in brief for owners and finance teams."
+
+msgid "Стрічка новин"
+msgstr "News feed"
+
+msgid "Поки немає опублікованих матеріалів."
+msgstr "No published items yet."
+
+msgid "Сторінки новин"
+msgstr "News pages"
+
+msgid "Назад"
+msgstr "Back"
+
+msgid "Сторінка %(num)s з %(total)s"
+msgstr "Page %(num)s of %(total)s"
+
+msgid "Далі"
+msgstr "Next"
+
+msgid "Такої сторінки немає"
+msgstr "This page does not exist"
+
+msgid ""
+"Адреса введена з помилкою або сторінку прибрали. Оберіть розділ у меню або "
+"поверніться на головну."
+msgstr "The address is wrong or the page was removed. Choose a section in the menu or go back home."
+
+msgid "На головну"
+msgstr "Back home"
+
+msgid "Київ"
+msgstr "Kyiv"
+
+msgid "Про нас"
+msgstr "About"
+
+msgid "Про"
+msgstr "About the"
+
+msgid "компанію"
+msgstr "company"
+
+msgid "Історія"
+msgstr "History"
+
+msgid "Хто"
+msgstr "Who"
+
+msgid "ми"
+msgstr "we are"
+
+msgid "Від аудиторської фірми до комплексного партнера для бізнесу."
+msgstr "From an audit firm to a full partner for business."
+
+msgid "Масштаб"
+msgstr "Scale"
+
+msgid "Цифри"
+msgstr "Figures"
+
+msgid "на ринку"
+msgstr "in the market"
+
+msgid "років на ринку"
+msgstr "years in the market"
+
+msgid "постійних клієнтів"
+msgstr "regular clients"
+
+msgid "успішних проєктів зі статусом критичності"
+msgstr "successful critical-status projects"
+
+msgid "супроводжених аудитів"
+msgstr "audits we have supported"
+
+msgid "Команда"
+msgstr "Team"
+
+msgid "Партнери"
+msgstr "Partners"
+
+msgid "справи"
+msgstr "of the firm"
+
+msgid "Ключові спеціалісти фірми."
+msgstr "The firm’s key specialists."
+
+msgid "Реєстр аудиторів та субʼєктів аудиторської діяльності"
+msgstr "Register of auditors and audit entities"
+
+msgid "Переглянути в Реєстрі"
+msgstr "View in the Register"
+
+msgid "Реєстровий номер"
+msgstr "Register number"
+
+msgid "Збільшити: %(title)s"
+msgstr "Enlarge: %(title)s"
+
+msgid "Перегляд сертифікатів"
+msgstr "View certificates"
+
+msgid "Закрити"
+msgstr "Close"
+
+msgid "Попередній"
+msgstr "Previous"
+
+msgid "Наступний"
+msgstr "Next"
+
+msgid "Слайди"
+msgstr "Slides"
+
+msgid "Слайд %(n)s"
+msgstr "Slide %(n)s"
+
+msgid "Роботи"
+msgstr "Work"
+
+msgid "Кейси"
+msgstr "Cases"
+
+msgid "Контакти"
+msgstr "Contacts"
+
+msgid ""
+"Заявок немає — одразу дзвінок або лист. Офіс у Києві, графік і дорога нижче."
+msgstr "There is no enquiry form — call or email directly. The Kyiv office, hours and directions are below."
+
+msgid "Реквізити"
+msgstr "Details"
+
+msgid "Офіс у"
+msgstr "Office in"
+
+msgid "Києві"
+msgstr "Kyiv"
+
+msgid "Телефон"
+msgstr "Phone"
+
+msgid "Додатковий"
+msgstr "Additional"
+
+msgid "Пошта"
+msgstr "Email"
+
+msgid "Адреса"
+msgstr "Address"
+
+msgid "Юридичні дані"
+msgstr "Legal details"
+
+msgid "Юридична назва"
+msgstr "Legal name"
+
+msgid "ЄДРПОУ"
+msgstr "EDRPOU"
+
+msgid "Реєстр аудиторів"
+msgstr "Auditors’ register"
+
+msgid "Карта офісу"
+msgstr "Office map"
+
+msgid "Відкрити в Google Maps"
+msgstr "Open in Google Maps"
+
+msgid "Візит"
+msgstr "Visit"
+
+msgid "Графік і"
+msgstr "Hours and"
+
+msgid "дорога"
+msgstr "directions"
+
+msgid "Перед візитом краще узгодити час телефоном або листом."
+msgstr "Please agree a time by phone or email before you visit."
+
+msgid "Графік роботи"
+msgstr "Opening hours"
+
+msgid "Пн–Пт"
+msgstr "Mon–Fri"
+
+msgid "Сб–Нд"
+msgstr "Sat–Sun"
+
+msgid "Як дістатися"
+msgstr "How to get here"
+
+msgid "Зателефонувати"
+msgstr "Call"
+
+msgid "Усі послуги"
+msgstr "All services"
+
+msgid "Каталог послуг"
+msgstr "Service catalogue"
+
+msgid "Одна команда"
+msgstr "One team"
+
+msgid "Одна команда веде справу до досягнення мети."
+msgstr "One team stays with the matter until the goal is reached."
+
+msgid "Статус критичності"
+msgstr "Critical status"
+
+msgid "Супровід на кожному етапі до позитивного результату."
+msgstr "Support at every stage until a positive result."
+
+msgid "Супровід перевірок"
+msgstr "Review support"
+
+msgid "Звільняємо бізнес від зайвої витрати часу та нервів."
+msgstr "We spare the business unnecessary time and stress."
+
+msgid "Уся стрічка"
+msgstr "Full feed"
+
+msgid "Новини зʼявляться незабаром."
+msgstr "News will appear soon."
+
+msgid "Політика конфіденційності"
+msgstr "Privacy policy"
+
+msgid "Питання щодо даних:"
+msgstr "Questions about data:"
+
+msgid "Написати листа"
+msgstr "Email us"
+
+msgid "Підвал"
+msgstr "Footer"
+
+msgid "Послуги"
+msgstr "Services"
+
+msgid "Сайт зроблено в"
+msgstr "Website by"
+
+msgid "Головне меню"
+msgstr "Main menu"
+
+msgid "Напрями"
+msgstr "Areas"
+
+msgid "Відкрити меню"
+msgstr "Open menu"
+
+msgid "Закрити меню"
+msgstr "Close menu"
+
+msgid "Мобільне меню"
+msgstr "Mobile menu"
+
+msgid "Мова"
+msgstr "Language"
+
+msgid "Напрям"
+msgstr "Area"
+
+msgid "Що входить"
+msgstr "What is included"
+
+msgid "Що"
+msgstr "What is"
+
+msgid "входить"
+msgstr "included"
+
+msgid "Для кого"
+msgstr "Who it is for"
+
+msgid "Замовити консультацію"
+msgstr "Request a consultation"
+
+msgid "Усі напрями"
+msgstr "All areas"
+
+msgid "Інші напрями"
+msgstr "Other areas"
+
+msgid "Сім напрямів супроводу бізнесу — від аудиту до кадрового обліку."
+msgstr "Seven areas of business support — from audit to personnel records."
+
+msgid "Напрями роботи"
+msgstr "Areas of work"

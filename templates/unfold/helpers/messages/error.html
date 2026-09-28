@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% if errors or error or message %}
+    <div class="errornote mb-3 px-3 py-3 rounded group-[.inline-tabular]:mb-0 group-[.inline-tabular]:mt-3 group-[.inline-tabular]:mx-3 group-[.inline-stacked]:mb-3 group-[.inline-stacked]:mt-3 group-[.inline-stacked]:mx-3 bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400{% if dismissible %} relative pr-14{% endif %}">
+        {% if error %}
+            {{ error }}
+        {% elif message %}
+            {{ message }}
+        {% else %}
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+        {% if dismissible %}
+            <button type="button" data-dismiss-message class="absolute top-1/2 right-1 flex h-11 w-11 -translate-y-1/2 items-center justify-center border-0 bg-transparent text-current text-xl leading-none cursor-pointer" aria-label="{% trans 'Закрити' %}">×</button>
+        {% endif %}
+    </div>
+{% endif %}

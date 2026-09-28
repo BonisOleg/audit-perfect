@@ -1,0 +1,45 @@
+{% if messages %}
+    <ul class="flex flex-col gap-4 mb-8" data-admin-messages>
+        {% for message in messages %}
+            <li{% if message.tags == "success" or message.tags == "info" %} data-autohide{% endif %}>
+                {% if message.tags == 'info' %}
+                    {% include "unfold/helpers/messages/info.html" with message=message %}
+                {% elif message.tags == 'success' %}
+                    {% include "unfold/helpers/messages/success.html" with message=message %}
+                {% elif message.tags == 'warning' %}
+                    {% include "unfold/helpers/messages/warning.html" with message=message dismissible=1 %}
+                {% elif message.tags == 'error' %}
+                    {% include "unfold/helpers/messages/error.html" with message=message dismissible=1 %}
+                {% else %}
+                    {% include "unfold/helpers/messages/debug.html" with message=message %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <script>
+      (function () {
+        document.querySelectorAll("[data-dismiss-message]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            var item = button.closest("li");
+            if (item) item.remove();
+          });
+        });
+        var items = document.querySelectorAll("[data-autohide]");
+        if (!items.length) return;
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.setTimeout(function () {
+          items.forEach(function (item) {
+            if (reduce) {
+              item.remove();
+              return;
+            }
+            item.style.transition = "opacity 0.35s ease";
+            item.style.opacity = "0";
+            window.setTimeout(function () {
+              item.remove();
+            }, 350);
+          });
+        }, 5000);
+      })();
+    </script>
+{% endif %}

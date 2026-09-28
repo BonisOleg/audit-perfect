@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load i18n static %}
 
 {% block body_class %}is-services-list{% endblock %}
 {% block data_page %}services{% endblock %}
@@ -12,15 +12,15 @@
 {% block content %}
 <header class="page-intro page-intro--catalog">
   <div class="container">
-    <p class="crumbs"><a href="{% url 'home' %}">Головна</a> · Послуги</p>
+    <p class="crumbs"><a href="{% url 'home' %}">{% trans "Головна" %}</a> · {% trans "Послуги" %}</p>
     <div class="page-intro__copy reveal">
-      <h1 class="page-intro__title">Послуги</h1>
-      <p class="page-intro__lead">Сім напрямів супроводу бізнесу — від аудиту до кадрового обліку.</p>
+      <h1 class="page-intro__title">{% trans "Послуги" %}</h1>
+      <p class="page-intro__lead">{% trans "Сім напрямів супроводу бізнесу — від аудиту до кадрового обліку." %}</p>
     </div>
   </div>
 </header>
 
-<section class="directions directions--catalog" aria-label="Напрями роботи">
+<section class="directions directions--catalog" aria-label="{% trans 'Напрями роботи' %}">
   <div class="container">
     <ol class="directions__list">
       {% for s in services %}

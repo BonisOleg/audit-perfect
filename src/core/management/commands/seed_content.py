@@ -4,6 +4,17 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
+from src.core.content_en import (
+    ABOUT_EN,
+    CASE_EN,
+    CERT_EN,
+    HOME_EN,
+    NEWS_EN,
+    SERVICE_EN,
+    SITE_EN,
+    TEAM_EN,
+    TEAM_NAMES_EN,
+)
 from src.core.models import SiteSettings
 from src.news.models import News
 from src.pages.models import AboutPage, Certificate, HomePage
@@ -272,9 +283,12 @@ class Command(BaseCommand):
         site, _ = SiteSettings.objects.update_or_create(
             pk=1,
             defaults={
-                "site_name": "Аудит-Перфект",
-                "tagline": "Аудиторська фірма",
-                "legal_name": "ПП «АФ «Аудит-Перфект»»",
+                "site_name_uk": "Аудит-Перфект",
+                "site_name_en": SITE_EN["site_name"],
+                "tagline_uk": "Аудиторська фірма",
+                "tagline_en": SITE_EN["tagline"],
+                "legal_name_uk": "ПП «АФ «Аудит-Перфект»»",
+                "legal_name_en": SITE_EN["legal_name"],
                 "edrpou": "34971458",
                 "phone": "+38 044 355 18 22",
                 "phone_href": "+380443551822",
@@ -282,41 +296,75 @@ class Command(BaseCommand):
                 "phone_secondary_href": "+380503765444",
                 "telegram": "",
                 "email": "office@auditperfekt.ua",
-                "address": "вул. Велика Житомирська, 20, Київ",
+                "address_uk": "вул. Велика Житомирська, 20, Київ",
+                "address_en": SITE_EN["address"],
                 "map_embed_url": (
                     "https://www.openstreetmap.org/export/embed.html"
                     "?bbox=30.508,50.450,30.524,50.459&layer=mapnik&marker=50.4547,30.5164"
                 ),
                 "maps_url": "",
-                "hours_weekdays": "09:00–18:00",
-                "hours_weekend": "Вихідний",
-                "hours_note": "Обідня перерва 13:00–14:00.",
-                "visit_directions": (
+                "hours_weekdays_uk": "09:00–18:00",
+                "hours_weekdays_en": SITE_EN["hours_weekdays"],
+                "hours_weekend_uk": "Вихідний",
+                "hours_weekend_en": SITE_EN["hours_weekend"],
+                "hours_note_uk": "Обідня перерва 13:00–14:00.",
+                "hours_note_en": SITE_EN["hours_note"],
+                "visit_directions_uk": (
                     "Метро «Золоті ворота» — 7–8 хвилин пішки\n"
                     "Вхід з боку вул. Велика Житомирська\n"
                     "Паркування поруч обмежене — зручніше таксі або метро"
                 ),
+                "visit_directions_en": SITE_EN["visit_directions"],
                 "registry_number": "3975",
                 "registry_url": "https://register.apob.org.ua/uk/search",
-                "home_meta_title": "Аудит-Перфект — аудит, облік і супровід бізнесу",
-                "about_meta_title": "Про нас — Аудит-Перфект",
-                "contacts_meta_title": "Контакти — Аудит-Перфект",
-                "policy_meta_title": "Політика конфіденційності — Аудит-Перфект",
-                "services_meta_title": "Послуги — Аудит-Перфект",
-                "news_meta_title": "Новини — Аудит-Перфект",
+                "home_meta_title_uk": "Аудит-Перфект — аудит, облік і супровід бізнесу",
+                "home_meta_title_en": SITE_EN["home_meta_title"],
+                "about_meta_title_uk": "Про нас — Аудит-Перфект",
+                "about_meta_title_en": SITE_EN["about_meta_title"],
+                "contacts_meta_title_uk": "Контакти — Аудит-Перфект",
+                "contacts_meta_title_en": SITE_EN["contacts_meta_title"],
+                "policy_meta_title_uk": "Політика конфіденційності — Аудит-Перфект",
+                "policy_meta_title_en": SITE_EN["policy_meta_title"],
+                "services_meta_title_uk": "Послуги — Аудит-Перфект",
+                "services_meta_title_en": SITE_EN["services_meta_title"],
+                "news_meta_title_uk": "Новини — Аудит-Перфект",
+                "news_meta_title_en": SITE_EN["news_meta_title"],
             },
         )
         self.stdout.write(f"SiteSettings: {site}")
 
-        HomePage.objects.update_or_create(pk=1, defaults={})
-        about, _ = AboutPage.objects.update_or_create(pk=1, defaults={"story": ABOUT_STORY})
+        home_defaults = {f"{key}_en": value for key, value in HOME_EN.items()}
+        HomePage.objects.update_or_create(pk=1, defaults=home_defaults)
+        about_defaults = {"story_uk": ABOUT_STORY, "story_en": ABOUT_EN["story"]}
+        about_defaults.update(
+            {
+                "lead_en": ABOUT_EN["lead"],
+                "stat_1_label_en": ABOUT_EN["stat_1_label"],
+                "stat_2_label_en": ABOUT_EN["stat_2_label"],
+                "stat_3_label_en": ABOUT_EN["stat_3_label"],
+                "stat_4_label_en": ABOUT_EN["stat_4_label"],
+                "certs_kicker_en": ABOUT_EN["certs_kicker"],
+                "certs_title_en": ABOUT_EN["certs_title"],
+                "certs_lead_en": ABOUT_EN["certs_lead"],
+                "meta_title_en": ABOUT_EN["meta_title"],
+                "meta_description_en": ABOUT_EN["meta_description"],
+            }
+        )
+        about, _ = AboutPage.objects.update_or_create(pk=1, defaults=about_defaults)
         self.stdout.write("Pages: Головна, Про нас")
         for title, filename, order in CERTS:
             cert, _ = Certificate.objects.get_or_create(
                 about=about,
-                title=title,
-                defaults={"sort_order": order, "is_active": True},
+                title_uk=title,
+                defaults={
+                    "title_en": CERT_EN.get(title, ""),
+                    "sort_order": order,
+                    "is_active": True,
+                },
             )
+            if not cert.title_en and title in CERT_EN:
+                cert.title_en = CERT_EN[title]
+                cert.save(update_fields=["title_en"])
             src = CERTS_DIR / filename
             if src.is_file() and not cert.image:
                 with src.open("rb") as handle:
@@ -324,26 +372,35 @@ class Command(BaseCommand):
         self.stdout.write(f"Certificates: {Certificate.objects.count()}")
 
         for data in SERVICES:
+            en = SERVICE_EN[data["slug"]]
             Service.objects.update_or_create(
                 slug=data["slug"],
                 defaults={
-                    "title": data["title"],
-                    "short_description": data["short_description"],
-                    "audience": data["audience"],
-                    "composition": data["composition"],
+                    "title_uk": data["title"],
+                    "title_en": en["title"],
+                    "short_description_uk": data["short_description"],
+                    "short_description_en": en["short_description"],
+                    "audience_uk": data["audience"],
+                    "audience_en": en["audience"],
+                    "composition_uk": data["composition"],
+                    "composition_en": en["composition"],
                     "sort_order": data["sort_order"],
                     "is_active": True,
-                    "meta_title": f"{data['title']} — Аудит-Перфект",
-                    "meta_description": data["short_description"],
+                    "meta_title_uk": f"{data['title']} — Аудит-Перфект",
+                    "meta_title_en": f"{en['title']} — {SITE_EN['site_name']}",
+                    "meta_description_uk": data["short_description"],
+                    "meta_description_en": en["short_description"],
                 },
             )
         self.stdout.write(f"Services: {Service.objects.count()}")
 
         for name, role, photo, order in TEAM:
             member, _ = TeamMember.objects.update_or_create(
-                name=name,
+                name_uk=name,
                 defaults={
-                    "role": role,
+                    "name_en": TEAM_NAMES_EN.get(name, ""),
+                    "role_uk": role,
+                    "role_en": TEAM_EN.get(name, ""),
                     "sort_order": order,
                     "is_active": True,
                 },
@@ -355,11 +412,15 @@ class Command(BaseCommand):
         self.stdout.write(f"Team: {TeamMember.objects.count()}")
 
         for title, industry, result, order in CASES:
+            en_case = CASE_EN[title]
             Case.objects.update_or_create(
-                title=title,
+                title_uk=title,
                 defaults={
-                    "industry": industry,
-                    "result": result,
+                    "title_en": en_case["title"],
+                    "industry_uk": industry,
+                    "industry_en": en_case["industry"],
+                    "result_uk": result,
+                    "result_en": en_case["result"],
                     "sort_order": order,
                     "is_active": True,
                 },
@@ -367,16 +428,22 @@ class Command(BaseCommand):
 
         now = timezone.now()
         for i, item in enumerate(NEWS):
+            en = NEWS_EN[item["slug"]]
             News.objects.update_or_create(
                 slug=item["slug"],
                 defaults={
-                    "title": item["title"],
-                    "excerpt": item["excerpt"],
-                    "body": item["body"],
+                    "title_uk": item["title"],
+                    "title_en": en["title"],
+                    "excerpt_uk": item["excerpt"],
+                    "excerpt_en": en["excerpt"],
+                    "body_uk": item["body"],
+                    "body_en": en["body"],
                     "is_published": True,
                     "published_at": now - timezone.timedelta(days=i * 7),
-                    "meta_title": f"{item['title']} — Аудит-Перфект",
-                    "meta_description": item["excerpt"],
+                    "meta_title_uk": f"{item['title']} — Аудит-Перфект",
+                    "meta_title_en": f"{en['title']} — {SITE_EN['site_name']}"[:70],
+                    "meta_description_uk": item["excerpt"],
+                    "meta_description_en": en["excerpt"][:160],
                 },
             )
         self.stdout.write(self.style.SUCCESS("Seed OK"))

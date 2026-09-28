@@ -1,7 +1,9 @@
 from pathlib import Path
 
 from django.conf import settings
+from django.utils.translation import get_language
 
+from src.core.i18n import localize_path
 from src.core.models import SiteSettings
 from src.services.models import Service
 
@@ -27,6 +29,8 @@ def site_globals(request):
     url_name = ""
     if getattr(request, "resolver_match", None):
         url_name = request.resolver_match.url_name or ""
+    path = request.get_full_path()
+    language = (get_language() or settings.LANGUAGE_CODE).split("-")[0]
     return {
         "site": site,
         "nav_services": services,
@@ -35,4 +39,10 @@ def site_globals(request):
         "ga4_id": settings.GA4_MEASUREMENT_ID,
         "current_nav": getattr(request, "current_nav", ""),
         "static_version": _static_asset_version(),
+        "current_language": language,
+        "en_enabled": bool(site.en_enabled),
+        "lang_switch_urls": {
+            "uk": localize_path(path, "uk"),
+            "en": localize_path(path, "en"),
+        },
     }

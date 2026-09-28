@@ -32,7 +32,9 @@
 
     const setExpanded = function (isOpen) {
       openBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      openBtn.setAttribute("aria-label", isOpen ? "Закрити меню" : "Відкрити меню");
+      var openLabel = openBtn.getAttribute("data-label-open") || "";
+      var closeLabel = openBtn.getAttribute("data-label-close") || "";
+      openBtn.setAttribute("aria-label", isOpen ? closeLabel : openLabel);
     };
     const open = function () {
       menu.classList.add("is-open");
@@ -110,7 +112,7 @@
         var label = copy.getAttribute("data-label") || copy.textContent;
         copy.setAttribute("data-label", label);
         var done = function () {
-          copy.textContent = "Скопійовано";
+          copy.textContent = copy.getAttribute("data-copied") || "";
           window.setTimeout(function () {
             copy.textContent = label;
           }, 2000);
@@ -125,7 +127,8 @@
   function servicesDrop() {
     const item = document.querySelector(".nav-desktop .nav-item");
     if (!item) return;
-    const path = (location.pathname || "/").replace(/\/+$/, "") || "/";
+    var path = (location.pathname || "/").replace(/^\/en(?=\/|$)/, "") || "/";
+    path = path.replace(/\/+$/, "") || "/";
     if (path === "/poslugy" || document.body.classList.contains("is-services-list")) {
       return;
     }

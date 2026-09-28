@@ -1,0 +1,7 @@
+{% load i18n %}
+<div class="mb-3 px-3 py-3 rounded text-sm last:mb-8 bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400{% if dismissible %} relative pr-14{% endif %}">
+    {{ message }}
+    {% if dismissible %}
+        <button type="button" data-dismiss-message class="absolute top-1/2 right-1 flex h-11 w-11 -translate-y-1/2 items-center justify-center border-0 bg-transparent text-current text-xl leading-none cursor-pointer" aria-label="{% trans 'Закрити' %}">×</button>
+    {% endif %}
+</div>

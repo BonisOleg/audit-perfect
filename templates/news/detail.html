@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load i18n static %}
 
 {% block title %}{{ article.seo_title }}{% endblock %}
 {% block meta_description %}{{ article.seo_description }}{% endblock %}
@@ -15,8 +15,8 @@
 <header class="page-intro page-intro--article">
   <div class="container">
     <p class="crumbs">
-      <a href="{% url 'home' %}">Головна</a> ·
-      <a href="{% url 'news:list' %}">Новини</a> ·
+      <a href="{% url 'home' %}">{% trans "Головна" %}</a> ·
+      <a href="{% url 'news:list' %}">{% trans "Новини" %}</a> ·
       {{ article.title|truncatechars:48 }}
     </p>
     <div class="page-intro__copy reveal">
@@ -29,24 +29,24 @@
   </div>
 </header>
 
-<section class="article" aria-label="Текст статті">
+<section class="article" aria-label="{% trans 'Текст статті' %}">
   <div class="container">
     <div class="article__prose reveal">
       {{ article.body_html }}
     </div>
     <div class="article__footer reveal">
-      <div class="share share--inline" data-share aria-label="Поділитися статтею">
-        <p class="section-kicker">Поділитися статтею</p>
+      <div class="share share--inline" data-share aria-label="{% trans 'Поділитися статтею' %}">
+        <p class="section-kicker">{% trans "Поділитися статтею" %}</p>
         <div class="share__row">
           <a href="#" data-share-telegram target="_blank" rel="noopener noreferrer">Telegram</a>
           <a href="#" data-share-facebook target="_blank" rel="noopener noreferrer">Facebook</a>
           <a href="#" data-share-linkedin target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <button type="button" data-share-copy>Скопіювати посилання</button>
+          <button type="button" data-share-copy data-copied="{% trans 'Скопійовано' %}">{% trans "Скопіювати посилання" %}</button>
         </div>
       </div>
       {% if related_news %}
-      <nav class="news-more news-more--in-article" aria-label="Інші новини">
-        <p class="section-kicker">Інші новини</p>
+      <nav class="news-more news-more--in-article" aria-label="{% trans 'Інші новини' %}">
+        <p class="section-kicker">{% trans "Інші новини" %}</p>
         <ul class="news-more__list">
           {% for item in related_news %}
           <li>

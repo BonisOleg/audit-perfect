@@ -2,6 +2,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.safestring import mark_safe
 
+from src.core.content_en import POLICY_UK, SITE_EN
 from src.core.fonts import (
     DEFAULT_BODY,
     DEFAULT_DISPLAY,
@@ -9,16 +10,26 @@ from src.core.fonts import (
     font_stack,
     google_fonts_href as build_google_fonts_href,
 )
+from src.core.l10n import bind_localized, localized
 
 
 class SiteSettings(models.Model):
-    site_name = models.CharField("Назва", max_length=120, default="Аудит-Перфект")
-    tagline = models.CharField("Підпис", max_length=120, default="Аудиторська фірма")
-    legal_name = models.CharField(
+    en_enabled = models.BooleanField("Англійська мова", default=True)
+    site_name_uk = models.CharField("Назва", max_length=120, default="Аудит-Перфект")
+    site_name_en = models.CharField("Name", max_length=120, blank=True, default=SITE_EN["site_name"])
+    tagline_uk = models.CharField("Підпис", max_length=120, default="Аудиторська фірма")
+    tagline_en = models.CharField("Tagline", max_length=120, blank=True, default=SITE_EN["tagline"])
+    legal_name_uk = models.CharField(
         "Юридична назва",
         max_length=255,
         default="ПП «АФ «Аудит-Перфект»»",
         blank=True,
+    )
+    legal_name_en = models.CharField(
+        "Legal name",
+        max_length=255,
+        blank=True,
+        default=SITE_EN["legal_name"],
     )
     edrpou = models.CharField("ЄДРПОУ", max_length=20, default="34971458", blank=True)
     phone = models.CharField("Телефон", max_length=40, default="+38 044 355 18 22")
@@ -43,10 +54,16 @@ class SiteSettings(models.Model):
         help_text="Username без @ або повне посилання t.me/…",
     )
     email = models.EmailField("Email", default="office@auditperfekt.ua")
-    address = models.CharField(
+    address_uk = models.CharField(
         "Адреса",
         max_length=255,
         default="вул. Велика Житомирська, 20, Київ",
+    )
+    address_en = models.CharField(
+        "Address",
+        max_length=255,
+        blank=True,
+        default=SITE_EN["address"],
     )
     map_embed_url = models.URLField("Карта (embed)", blank=True)
     maps_url = models.URLField(
@@ -54,23 +71,41 @@ class SiteSettings(models.Model):
         blank=True,
         help_text="Якщо порожньо — будується з адреси.",
     )
-    hours_weekdays = models.CharField(
+    hours_weekdays_uk = models.CharField(
         "Години Пн–Пт",
         max_length=80,
         default="09:00–18:00",
     )
-    hours_weekend = models.CharField(
+    hours_weekdays_en = models.CharField(
+        "Hours Mon–Fri",
+        max_length=80,
+        blank=True,
+        default=SITE_EN["hours_weekdays"],
+    )
+    hours_weekend_uk = models.CharField(
         "Години Сб–Нд",
         max_length=80,
         default="Вихідний",
     )
-    hours_note = models.CharField(
+    hours_weekend_en = models.CharField(
+        "Hours Sat–Sun",
+        max_length=80,
+        blank=True,
+        default=SITE_EN["hours_weekend"],
+    )
+    hours_note_uk = models.CharField(
         "Примітка до графіка",
         max_length=255,
         blank=True,
         default="Обідня перерва 13:00–14:00.",
     )
-    visit_directions = models.TextField(
+    hours_note_en = models.CharField(
+        "Hours note",
+        max_length=255,
+        blank=True,
+        default=SITE_EN["hours_note"],
+    )
+    visit_directions_uk = models.TextField(
         "Як дістатися",
         blank=True,
         default=(
@@ -80,18 +115,30 @@ class SiteSettings(models.Model):
         ),
         help_text="Кожен рядок — окремий пункт.",
     )
+    visit_directions_en = models.TextField(
+        "Directions",
+        blank=True,
+        default=SITE_EN["visit_directions"],
+        help_text="Кожен рядок — окремий пункт.",
+    )
     registry_url = models.URLField(
         "Реєстр аудиторів",
         default="https://register.apob.org.ua/uk/search",
         blank=True,
     )
     registry_number = models.CharField("Номер у реєстрі", max_length=40, default="3975")
-    default_meta_title = models.CharField(
+    default_meta_title_uk = models.CharField(
         "SEO title за замовчуванням",
         max_length=70,
         default="Аудит-Перфект — аудит, облік і супровід бізнесу",
     )
-    default_meta_description = models.CharField(
+    default_meta_title_en = models.CharField(
+        "Default SEO title",
+        max_length=70,
+        blank=True,
+        default=SITE_EN["default_meta_title"],
+    )
+    default_meta_description_uk = models.CharField(
         "SEO description за замовчуванням",
         max_length=160,
         default=(
@@ -99,13 +146,25 @@ class SiteSettings(models.Model):
             "і призначенні статусу критично важливого підприємства."
         ),
     )
-    home_meta_title = models.CharField(
+    default_meta_description_en = models.CharField(
+        "Default SEO description",
+        max_length=160,
+        blank=True,
+        default=SITE_EN["default_meta_description"],
+    )
+    home_meta_title_uk = models.CharField(
         "SEO title: Головна",
         max_length=70,
         blank=True,
         default="Аудит-Перфект — аудит, облік і супровід бізнесу",
     )
-    home_meta_description = models.CharField(
+    home_meta_title_en = models.CharField(
+        "SEO title: Home",
+        max_length=70,
+        blank=True,
+        default=SITE_EN["home_meta_title"],
+    )
+    home_meta_description_uk = models.CharField(
         "SEO description: Головна",
         max_length=160,
         blank=True,
@@ -114,13 +173,25 @@ class SiteSettings(models.Model):
             "і призначенні статусу критично важливого підприємства."
         ),
     )
-    about_meta_title = models.CharField(
+    home_meta_description_en = models.CharField(
+        "SEO description: Home",
+        max_length=160,
+        blank=True,
+        default=SITE_EN["home_meta_description"],
+    )
+    about_meta_title_uk = models.CharField(
         "SEO title: Про нас",
         max_length=70,
         blank=True,
         default="Про нас — Аудит-Перфект",
     )
-    about_meta_description = models.CharField(
+    about_meta_title_en = models.CharField(
+        "SEO title: About",
+        max_length=70,
+        blank=True,
+        default=SITE_EN["about_meta_title"],
+    )
+    about_meta_description_uk = models.CharField(
         "SEO description: Про нас",
         max_length=160,
         blank=True,
@@ -129,13 +200,25 @@ class SiteSettings(models.Model):
             "та юридичний супровід з 2007 року."
         ),
     )
-    contacts_meta_title = models.CharField(
+    about_meta_description_en = models.CharField(
+        "SEO description: About",
+        max_length=160,
+        blank=True,
+        default=SITE_EN["about_meta_description"],
+    )
+    contacts_meta_title_uk = models.CharField(
         "SEO title: Контакти",
         max_length=70,
         blank=True,
         default="Контакти — Аудит-Перфект",
     )
-    contacts_meta_description = models.CharField(
+    contacts_meta_title_en = models.CharField(
+        "SEO title: Contacts",
+        max_length=70,
+        blank=True,
+        default=SITE_EN["contacts_meta_title"],
+    )
+    contacts_meta_description_uk = models.CharField(
         "SEO description: Контакти",
         max_length=160,
         blank=True,
@@ -144,25 +227,49 @@ class SiteSettings(models.Model):
             "графік роботи та як дістатися."
         ),
     )
-    policy_meta_title = models.CharField(
+    contacts_meta_description_en = models.CharField(
+        "SEO description: Contacts",
+        max_length=160,
+        blank=True,
+        default=SITE_EN["contacts_meta_description"],
+    )
+    policy_meta_title_uk = models.CharField(
         "SEO title: Політика",
         max_length=70,
         blank=True,
         default="Політика конфіденційності — Аудит-Перфект",
     )
-    policy_meta_description = models.CharField(
+    policy_meta_title_en = models.CharField(
+        "SEO title: Privacy",
+        max_length=70,
+        blank=True,
+        default=SITE_EN["policy_meta_title"],
+    )
+    policy_meta_description_uk = models.CharField(
         "SEO description: Політика",
         max_length=160,
         blank=True,
         default="Як Аудит-Перфект обробляє персональні дані відвідувачів сайту.",
     )
-    services_meta_title = models.CharField(
+    policy_meta_description_en = models.CharField(
+        "SEO description: Privacy",
+        max_length=160,
+        blank=True,
+        default=SITE_EN["policy_meta_description"],
+    )
+    services_meta_title_uk = models.CharField(
         "SEO title: Послуги",
         max_length=70,
         blank=True,
         default="Послуги — Аудит-Перфект",
     )
-    services_meta_description = models.CharField(
+    services_meta_title_en = models.CharField(
+        "SEO title: Services",
+        max_length=70,
+        blank=True,
+        default=SITE_EN["services_meta_title"],
+    )
+    services_meta_description_uk = models.CharField(
         "SEO description: Послуги",
         max_length=160,
         blank=True,
@@ -171,13 +278,25 @@ class SiteSettings(models.Model):
             "військовий облік, юридичні та кадрові послуги."
         ),
     )
-    news_meta_title = models.CharField(
+    services_meta_description_en = models.CharField(
+        "SEO description: Services",
+        max_length=160,
+        blank=True,
+        default=SITE_EN["services_meta_description"],
+    )
+    news_meta_title_uk = models.CharField(
         "SEO title: Новини",
         max_length=70,
         blank=True,
         default="Новини — Аудит-Перфект",
     )
-    news_meta_description = models.CharField(
+    news_meta_title_en = models.CharField(
+        "SEO title: News",
+        max_length=70,
+        blank=True,
+        default=SITE_EN["news_meta_title"],
+    )
+    news_meta_description_uk = models.CharField(
         "SEO description: Новини",
         max_length=160,
         blank=True,
@@ -186,7 +305,15 @@ class SiteSettings(models.Model):
             "і супровід бізнесу."
         ),
     )
-    footer_blurb = models.TextField(
+    news_meta_description_en = models.CharField(
+        "SEO description: News",
+        max_length=160,
+        blank=True,
+        default=SITE_EN["news_meta_description"],
+    )
+    policy_body_uk = models.TextField("Текст політики", blank=True, default=POLICY_UK)
+    policy_body_en = models.TextField("Privacy text", blank=True, default=SITE_EN["policy_body"])
+    footer_blurb_uk = models.TextField(
         "Текст у футері",
         blank=True,
         default=(
@@ -194,15 +321,32 @@ class SiteSettings(models.Model):
             "військовий облік і юридичний супровід — однією командою."
         ),
     )
-    consult_kicker = models.CharField(
+    footer_blurb_en = models.TextField(
+        "Footer text",
+        blank=True,
+        default=SITE_EN["footer_blurb"],
+    )
+    consult_kicker_uk = models.CharField(
         "Підпис блоку консультації",
         max_length=80,
         default="Контакт",
     )
-    consult_title = models.CharField(
+    consult_kicker_en = models.CharField(
+        "Consultation kicker",
+        max_length=80,
+        blank=True,
+        default=SITE_EN["consult_kicker"],
+    )
+    consult_title_uk = models.CharField(
         "Заголовок блоку консультації",
         max_length=120,
         default="Потрібна консультація",
+    )
+    consult_title_en = models.CharField(
+        "Consultation title",
+        max_length=120,
+        blank=True,
+        default=SITE_EN["consult_title"],
     )
     color_red = models.CharField(
         "Червоний",
@@ -252,7 +396,7 @@ class SiteSettings(models.Model):
         verbose_name_plural = "Футер"
 
     def __str__(self) -> str:
-        return self.site_name
+        return self.site_name_uk
 
     @property
     def theme_css(self):
@@ -315,65 +459,29 @@ class SiteSettings(models.Model):
     def footer_blurb_html(self):
         from src.core.richtext import render_cms_text
 
-        return render_cms_text(self.footer_blurb)
+        return render_cms_text(localized(self, "footer_blurb"))
+
+    @property
+    def policy_body_html(self):
+        from src.core.richtext import render_cms_text
+
+        return render_cms_text(localized(self, "policy_body"))
 
     @property
     def visit_direction_lines(self) -> list[str]:
         return [
             line.strip()
-            for line in (self.visit_directions or "").splitlines()
+            for line in (localized(self, "visit_directions") or "").splitlines()
             if line.strip()
         ]
 
     def meta_for(self, page: str) -> tuple[str, str]:
-        title = (getattr(self, f"{page}_meta_title", "") or "").strip()
-        description = (getattr(self, f"{page}_meta_description", "") or "").strip()
+        title = (localized(self, f"{page}_meta_title") or "").strip()
+        description = (localized(self, f"{page}_meta_description") or "").strip()
         return (
-            title or self.default_meta_title,
-            description or self.default_meta_description,
+            title or (localized(self, "default_meta_title") or "").strip(),
+            description or (localized(self, "default_meta_description") or "").strip(),
         )
 
 
-class SiteBlock(models.Model):
-    class Page(models.TextChoices):
-        HOME = "home", "Головна"
-        ABOUT = "about", "Про нас"
-
-    class BlockType(models.TextChoices):
-        TEXT = "text", "Текст"
-        HTML = "html", "HTML"
-        IMAGE = "image", "Зображення"
-
-    page = models.CharField(
-        "Сторінка",
-        max_length=64,
-        choices=Page.choices,
-        db_index=True,
-    )
-    key = models.CharField(
-        "Ключ",
-        max_length=64,
-        help_text="Не змінюйте ключ, якщо блок уже на сайті.",
-    )
-    title = models.CharField("Заголовок", max_length=255, blank=True)
-    body = models.TextField("Текст", blank=True)
-    image = models.ImageField("Зображення", upload_to="blocks/", blank=True)
-    block_type = models.CharField(
-        "Тип",
-        max_length=16,
-        choices=BlockType.choices,
-        default=BlockType.TEXT,
-    )
-    is_visible = models.BooleanField("Видимий", default=True)
-    sort_order = models.PositiveIntegerField("Порядок", default=0)
-
-    class Meta:
-        verbose_name = "Текст сторінки"
-        verbose_name_plural = "Тексти сторінок"
-        ordering = ["page", "sort_order", "key"]
-        constraints = [
-            models.UniqueConstraint(fields=["page", "key"], name="uniq_siteblock_page_key"),
-        ]
-
-    def __str__(self) -> str:
-        return f"{self.page}:{self.key}"
+from src.core.models_extra import SiteBlock  # noqa: E402,F401

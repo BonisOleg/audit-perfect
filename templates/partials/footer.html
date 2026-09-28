@@ -1,3 +1,4 @@
+{% load i18n %}
 <footer class="site-footer">
   <div class="footer__grid">
     <div>
@@ -7,13 +8,13 @@
       </a>
       <div>{{ site.footer_blurb_html }}</div>
     </div>
-    <nav class="footer__nav" aria-label="Підвал">
-      <a href="{% url 'home' %}">Головна</a>
-      <a href="{% url 'pages:about' %}">Про нас</a>
-      <a href="{% url 'services:list' %}">Послуги</a>
-      <a href="{% url 'news:list' %}">Новини</a>
-      <a href="{% url 'pages:contacts' %}">Контакти</a>
-      <a href="{% url 'pages:policy' %}">Політика конфіденційності</a>
+    <nav class="footer__nav" aria-label="{% trans 'Підвал' %}">
+      <a href="{% url 'home' %}">{% trans "Головна" %}</a>
+      <a href="{% url 'pages:about' %}">{% trans "Про нас" %}</a>
+      <a href="{% url 'services:list' %}">{% trans "Послуги" %}</a>
+      <a href="{% url 'news:list' %}">{% trans "Новини" %}</a>
+      <a href="{% url 'pages:contacts' %}">{% trans "Контакти" %}</a>
+      <a href="{% url 'pages:policy' %}">{% trans "Політика конфіденційності" %}</a>
     </nav>
     <div>
       <a href="tel:{{ site.phone_href }}">{{ site.phone }}</a><br>
@@ -25,10 +26,10 @@
     <span>© 2026 {{ site.site_name }}</span>
     <span class="footer__credit">
       {% if is_homepage %}
-      Сайт зроблено в
+      {% trans "Сайт зроблено в" %}
       <a class="footer__credit-link" href="https://www.prometeylabs.com/corporate-website-v2/" rel="nofollow noopener noreferrer" target="_blank"><span class="footer__credit-prometey">Prometey</span><span class="footer__credit-labs">Labs</span></a>
       {% else %}
-      Сайт зроблено в
+      {% trans "Сайт зроблено в" %}
       <span class="footer__credit-name"><span class="footer__credit-prometey">Prometey</span><span class="footer__credit-labs">Labs</span></span>
       {% endif %}
     </span>
